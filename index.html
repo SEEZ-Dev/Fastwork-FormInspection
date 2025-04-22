@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Approved Process Check Sheet :TM</title>
+  <style>
+    :root {
+      --bg-color: #ffffff;
+      --panel-bg: #f4f4f4;
+      --text-color: #111;
+      --text-secondary: #555;
+      --border-color: #ddd;
+      --accent-color: #ff7941;
+      --input-bg: #fff;
+      --input-border: #ccc;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #111217;
+      --panel-bg: #181b1f;
+      --text-color: #d8d9da;
+      --text-secondary: #8e8e8e;
+      --border-color: #222426;
+      --input-bg: #202226;
+      --input-border: #2c3235;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Open Sans", sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.5;
+      padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 1rem;
+      background-color: var(--bg-color);
+      border-bottom: 1px solid var(--border-color);
+      height: 52px;
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background-color: var(--panel-bg);
+      border-radius: 3px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .panel-header {
+      padding: 0.8rem 1rem;
+      font-size: 1.1rem;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border-color);
+      background-color: var(--panel-bg);
+    }
+
+    .panel-content {
+      padding: 1rem;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 10px;
+    }
+
+    .form-field {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+
+    .main-label {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: var(--text-color);
+      font-size: 1rem;
+    }
+
+    input,
+    select {
+      flex: 1;
+      padding: 6px 10px;
+      background-color: var(--input-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 2px;
+      color: var(--text-color);
+      font-size: 14px;
+    }
+
+    select {
+      width: 100%;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .btn {
+      background-color: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 2px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      padding: 5px 10px;
+      border: none;
+      background: var(--accent-color);
+      color: white;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <span>Approved Process Check Sheet :TM</span>
+      <button id="themeToggle" class="theme-toggle">เปลี่ยนโหมด</button>
+    </header>
+
+    <div class="panel">
+      <div class="panel-header">ข้อมูลทั่วไป</div>
+      <div class="panel-content">
+        <div class="form-group">
+          <div class="form-row">
+            <div class="form-field">
+              <label>เครื่องจักร</label>
+              <input type="text" placeholder="เช่น เครื่องจักร A">
+            </div>
+            <div class="form-field">
+              <label>วันที่</label>
+              <input type="date">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>ใบสั่งผลิตเลขที่</label>
+              <input type="text" placeholder="เช่น 0001">
+            </div>
+            <div class="form-field">
+              <label>Size ที่ผลิต</label>
+              <input type="text">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>เวลาที่ตรวจเช็ค</label>
+              <input type="time">
+            </div>
+            <div class="form-field">
+              <label>รายละเอียดการพ่นเครื่องหมายการค้า</label>
+              <input type="text">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">รายละเอียดการเปลี่ยนเครื่องหมายการค้า</div>
+      <div class="panel-content">
+        <div class="form-group">
+          <label class="main-label">เปลี่ยน Size</label>
+          <div class="form-row">
+            <div class="form-field">
+              <label>จาก</label>
+              <input type="text">
+            </div>
+            <div class="form-field">
+              <label>เป็น</label>
+              <input type="text">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="main-label">เปลี่ยนความหนา</label>
+          <div class="form-row">
+            <div class="form-field">
+              <label>จาก</label>
+              <input type="text">
+            </div>
+            <div class="form-field">
+              <label>เป็น</label>
+              <input type="text">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">1. ตรวจเช็ควัตถุดิบ</div>
+      <div class="panel-content">
+        <div class="form-group">
+          <label class="main-label">หน้ากว้างของวัตถุดิบ (mm)</label>
+          <div class="form-row">
+            <div class="form-field">
+              <label>ตำแหน่งที่ 1</label>
+              <input type="number" placeholder="เช่น 20">
+            </div>
+            <div class="form-field">
+              <label>ตำแหน่งที่ 2</label>
+              <input type="number" placeholder="เช่น 20">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="main-label">ความหนาของวัตถุดิบ (mm)</label>
+          <div class="form-row">
+            <div class="form-field">
+              <label>ขอบด้านซ้าย</label>
+              <input type="number" placeholder="เช่น 20">
+            </div>
+            <div class="form-field">
+              <label>ขอบด้านขวา</label>
+              <input type="number" placeholder="เช่น 20">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>รอยคมเหล็กวัตถุดิบอยู่ด้านบน</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="yes">ใช่</option>
+            <option value="no">ไม่ใช่</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ลักษณะทั่วไป (ขอบพริ้ว / สนิม)</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="normal">ปกติ</option>
+            <option value="rust">สนิม</option>
+            <option value="wave">ขอบพริ้ว</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">2. การ Set up เครื่อง</div>
+      <div class="panel-content">
+        <div class="form-group">
+          <label>สภาพลูกรีดที่ใช้งาน</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="ไม่สึก">ไม่สึก</option>
+            <option value="สึก">สึก</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Center Line Roll</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="ตรง">ตรง</option>
+            <option value="ไม่ตรง">ไม่ตรง</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>การใส่ลูกรีดแต่ละ Stand</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="ถูกต้อง">ถูกต้อง</option>
+            <option value="ไม่ถูกต้อง">ไม่ถูกต้อง</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>น้ำหล่อเย็นไหลเข้าแกนเคส</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="ปกติ">ปกติ</option>
+            <option value="ไม่ปกติ">ไม่ปกติ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ข้อต่อแกนเคส</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="ปกติ">ปกติ</option>
+            <option value="ไม่ปกติ">ไม่ปกติ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ขนาดถ่าน Impeder Core (mm)</label>
+          <input type="number">
+        </div>
+        <div class="form-group">
+          <label>Impeder Casing O.D. (mm)</label>
+          <input type="number">
+        </div>
+        <div class="form-group">
+          <label>ขนาด I.D. Working Coil (mm)</label>
+          <input type="number">
+        </div>
+        <div class="form-group">
+          <label>ประเภท Working coil</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="สะอาด">สะอาด</option>
+            <option value="ไม่สะอาด">ไม่สะอาด</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ความสะอาดของ Working Coil</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="สะอาด">สะอาด</option>
+            <option value="ไม่สะอาด">ไม่สะอาด</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ระยะจากปลาย Working Coil ถึงจุดเชื่อม SQ</label>
+          <input type="number" placeholder="สำหรับ TM1,2 D=(60-80) mm">
+        </div>
+        <div class="form-group">
+          <label>ระยะจากปลายของแกนถึงจุดเชื่อม SQ</label>
+          <input type="number" placeholder="ความห่าง 2 ถึง 5 mm">
+        </div>
+        <div class="form-group">
+          <label>ใบเซียนครบตามกำหนด</label>
+          <div class="form-row">
+            <div class="form-field">
+              <label>ชั้น 1</label>
+              <select>
+                <option value="">-- เลือก --</option>
+                <option value="ปกติ">ปกติ</option>
+                <option value="ไม่ปกติ">ไม่ปกติ</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>ชั้น 2</label>
+              <select>
+                <option value="">-- เลือก --</option>
+                <option value="ปกติ">ปกติ</option>
+                <option value="ไม่ปกติ">ไม่ปกติ</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>ตำแหน่งใบเซียน</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="ปกติ">ปกติ</option>
+            <option value="ไม่ปกติ">ไม่ปกติ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>การทำงานของ Encoder</label>
+          <select>
+            <option value="">-- เลือก --</option>
+            <option value="ปกติ">ปกติ</option>
+            <option value="ไม่ปกติ">ไม่ปกติ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>ตั้งค่าระบบ SQ</label>
+          <input type="number" placeholder="≤ 4%">
+        </div>
+        <div class="form-group">
+          <label>ความขุ่น Coolant</label>
+          <input type="number" placeholder="≤ 180">
+        </div>
+        <div class="form-group">
+          <label>pH ของ Coolant</label>
+          <input type="number" placeholder="≥ 9">
+        </div>
+        <div class="form-group">
+          <label>อุณหภูมิ Coolant</label>
+          <input type="number" placeholder="≤ 46°C">
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">3. ค่าพารามิเตอร์ในขณะเดินเครื่อง</div>
+      <div class="panel-content">
+        <div class="form-group">
+          <div class="form-row">
+            <div class="form-field">
+              <label>Speed</label>
+              <input type="number" placeholder="M/min">
+            </div>
+            <div class="form-field">
+              <label>Power</label>
+              <input type="number" placeholder="KW">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-field">
+              <label>V</label>
+              <input type="number" placeholder="โวลต์">
+            </div>
+            <div class="form-field">
+              <label>A</label>
+              <input type="number" placeholder="แอมป์">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">4. คุณภาพชิ้นงาน</div>
+      <div class="panel-content">
+        <div class="form-group">
+          <label>ค่าความกลม O.D. ท่อรวม</label>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Min</label>
+              <input type="number" placeholder="mm">
+            </div>
+            <div class="form-field">
+              <label>Max</label>
+              <input type="number" placeholder="mm">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>ค่าความกลม O.D. หลังเครื่องตัดและเป็นปลาย</label>
+          <div class="form-row">
+            <div class="form-field">
+              <label>Min</label>
+              <input type="number" placeholder="mm">
+            </div>
+            <div class="form-field">
+              <label>Max</label>
+              <input type="number" placeholder="mm">
+            </div>
+          </div>
+          <div class="form-row" style="margin-top: 10px;">
+            <div class="form-field">
+              <label>ด้าน A</label>
+              <input type="number" placeholder="mm">
+            </div>
+            <div class="form-field">
+              <label>ด้าน B</label>
+              <input type="number" placeholder="mm">
+            </div>
+            <div class="form-field">
+              <label>ด้าน C</label>
+              <input type="number" placeholder="mm">
+            </div>
+            <div class="form-field">
+              <label>ด้าน D</label>
+              <input type="number" placeholder="mm">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>ค่าความ (± 0.3%ของมาตรฐาน) ≤</label>
+          <input type="number" placeholder="mm">
+        </div>
+        <div class="form-group">
+          <label>ความเรียบที่ผิวรอยเชื่อม min= -0.5 max= +0.5</label>
+          <input type="number">
+        </div>
+        <div class="form-group">
+          <label>ความเรียบที่ผิวทั่วไป min = 88.5° , max = 91.5°</label>
+          <input type="number">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn">บันทึกข้อมูล</button>
+    </div>
+  </div>
+
+  <script>
+    const themeToggle = document.getElementById("themeToggle");
+
+    function setTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute("data-theme");
+      setTheme(currentTheme === "dark" ? "light" : "dark");
+    }
+
+    themeToggle.addEventListener("click", toggleTheme);
+
+    const savedTheme = localStorage.getItem("theme") || "light";
+    setTheme(savedTheme);
+  </script>
+</body>
+
+</html>
