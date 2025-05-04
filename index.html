@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,26 +11,29 @@
       --bg: #f8f9fa;
       --fg: #2c3e50;
       --panel: #ffffff;
-      --accent: #3498db;
+      --accent: rgb(250, 116, 75);
       --success: #2ecc71;
       --error: #e74c3c;
       --input-bg: #ffffff;
       --input-border: #e0e0e0;
-      --shadow: 0 2px 4px rgba(0,0,0,0.1);
+      --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
+
     .dark {
       --bg: #1a1a1a;
       --fg: #ecf0f1;
       --panel: #2c2c2c;
       --input-bg: #333333;
       --input-border: #444444;
-      --shadow: 0 2px 4px rgba(0,0,0,0.3);
+      --shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     body {
       font-family: 'Prompt', sans-serif;
       background: var(--bg);
@@ -38,6 +42,7 @@
       transition: all 0.3s ease;
       line-height: 1.6;
     }
+
     header {
       display: flex;
       justify-content: space-between;
@@ -48,11 +53,13 @@
       border-radius: 8px;
       box-shadow: var(--shadow);
     }
+
     h1 {
       font-size: 1.5rem;
       font-weight: 600;
       color: var(--accent);
     }
+
     form section {
       background: var(--panel);
       padding: 1.5rem;
@@ -60,22 +67,50 @@
       margin-bottom: 1.5rem;
       box-shadow: var(--shadow);
     }
+
     h2 {
       margin-bottom: 1rem;
       font-size: 1.2rem;
       color: var(--accent);
       font-weight: 500;
     }
+
     .grid {
       display: grid;
       gap: 1rem;
     }
+
     .grid-2 {
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+      /* default 1 column for mobile */
     }
+
+    .grid-3 {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: 1fr;
+      /* 1 column for mobile */
+    }
+
+    @media (min-width: 768px) {
+      .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns for tablet+ */
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 columns for tablet+ */
+      }
+    }
+
+
     .grid-4 {
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
+
     label {
       display: block;
       font-size: 0.9rem;
@@ -83,7 +118,11 @@
       color: var(--fg);
       font-weight: 400;
     }
-    input, select, button {
+
+    input,
+    select,
+    textarea,
+    button {
       width: 100%;
       padding: 0.75rem;
       border: 1px solid var(--input-border);
@@ -93,11 +132,18 @@
       color: var(--fg);
       transition: all 0.3s ease;
     }
-    input:focus, select:focus {
+
+    textarea {
+      min-height: 100px;
+    }
+
+    input:focus,
+    select:focus {
       outline: none;
       border-color: var(--accent);
       box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
     }
+
     button {
       background: var(--accent);
       color: white;
@@ -107,20 +153,24 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
+
     button:hover {
       opacity: 0.9;
       transform: translateY(-1px);
     }
+
     button:disabled {
       opacity: 0.7;
       cursor: not-allowed;
       transform: none;
     }
+
     #themeToggle {
       width: auto;
       padding: 0.5rem 1rem;
       font-size: 1.2rem;
     }
+
     .notification {
       position: fixed;
       top: 20px;
@@ -132,19 +182,31 @@
       animation: slideIn 0.3s ease;
       z-index: 1000;
     }
+
     .success {
       background: var(--success);
     }
+
     .error {
       background: var(--error);
     }
+
     @keyframes slideIn {
-      from { transform: translateX(100%); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
+
     .loading {
       position: relative;
     }
+
     .loading::after {
       content: '';
       position: absolute;
@@ -153,22 +215,124 @@
       width: 20px;
       height: 20px;
       margin: -10px 0 0 -10px;
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: white;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
+
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
   </style>
 </head>
+
 <body>
   <header>
-    <h1>Approved Process Check Sheet :TM</h1>
-    <button id="themeToggle">🌓</button>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <img src="public/tmt-logo.png" alt="TMT Steel Logo" style="width: 100px; height: auto;">
+      <h1>INPROCESS INSPECTION (PIPE)</h1>
+      <p>W-FM-QA-13 R09</p>
+    </div>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <!-- <button id="themeToggle">🌓</button> -->
+      <select name="doc-mode" style="width: 320px;">
+        <option value="inprocess">ต้นฉบับ</option>
+        <option value="approved">CIR</option>
+        <option value="approved">REC</option>
+      </select>
+    </div>
   </header>
-  <form id="f">
+  <form id="form-inprocess">
+    <section>
+      <div class="grid grid-3">
+        <div>
+          <div><label>เครื่องจักร</label><input name="machine" required></div>
+          <div><label>วันที่ผลิต</label><input type="date" name="productionDate" required></div>
+          <div><label>เลขที่ใบสั่งผลิต</label><input name="orderNo"></div>
+          <div><label>เกรดวัตถุดิบ</label><input name="materialGrade"></div>
+          <div><label>ความกว้างฟิล์ม</label><input name="filmWidth"></div>
+          <div><label>ขนาดผลิต</label><input name="productSize"></div>
+          <div>
+            <label>ประเภทท่อ</label>
+            <select name="pipeType" required>
+              <option value="">-- เลือก --</option>
+              <option value="uncoated">ไม่เคลือบผิว</option>
+              <option value="galvanized">เคลือบสังกะสี (GI/GA)</option>
+            </select>
+          </div>
+          <div><label>Vernier No.</label><input name="vernierNo"></div>
+        </div>
+        <div>
+          <div><label>Micrometer No.</label><input name="micrometerNo"></div>
+          <div><label>Reflextrometer No.</label><input name="reflextrometerNo"></div>
+          <div><label>หมายเลขตลับเมตร</label><input name="tapeNo"></div>
+          <div><label>หมายเลขไม้บรรทัด</label><input name="rulerNo"></div>
+          <div><label>หมายเลขเครื่องชั่ง</label><input name="scaleNo"></div>
+          <div><label>หมายเลขจานวัดองศา</label><input name="angleDiscNo"></div>
+          <div>
+            <label>ทดสอบแนวตะเข็บด้วย Eddy Current Testing</label>
+            <select name="eddyTest" required>
+              <option value="">-- เลือก --</option>
+              <option value="true">ทดสอบแนวตะเข็บด้วย Eddy Current Testing</option>
+              <option value="false">ไม่ทดสอบแนวตะเข็บด้วย Eddy Current Testing</option>
+            </select>
+          </div>
+          <div><label>รายละเอียดการพ่นเครื่องหมายและฉลากการค้า</label>
+            <select name="trademarkDetails">
+              <option value="">-- เลือก --</option>
+              <option value="true">TMT 3 จุด</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <h2>รูปแบบอ้างอิงการตรวจเช็ค</h2>
+          <div style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+          ">
+            <style>
+              .img-wrapper {
+                aspect-ratio: 1 / 1;
+                border: 1px solid #ccc;
+                background: #fff;
+                padding: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+        
+              .img-wrapper img {
+                max-width: 100%;
+                max-height: 100%;
+                object-fit: contain;
+              }
+            </style>
+        
+            <div class="img-wrapper">
+              <img src="public/circle-ref.png" alt="circle-ref" />
+            </div>
+            <div class="img-wrapper">
+              <img src="public/square-ref.png" alt="square-ref" />
+            </div>
+          </div>
+        </div>
+        
+        
+
+      </div>
+    </section>
+    <section>
+      <div>
+        <input type="text" name="serialNo" value="TMT TIS 107 - "
+          onfocus="if(!this.value.startsWith('TMT TIS 107 - '))this.value='TMT TIS 107 - '; this.setSelectionRange(13, this.value.length);"
+          oninput="if(!this.value.startsWith('TMT TIS 107 - ')){this.value='TMT TIS 107 - '+this.value.slice(13).replace('TMT TIS 107 -','');}"
+          onkeydown="if((event.key==='Backspace'||event.key==='ArrowLeft')&&this.selectionStart<=13){event.preventDefault(); this.setSelectionRange(13,13);}" />
+      </div>
+    </section>
     <!-- ข้อมูลทั่วไป -->
     <section>
       <h2>ข้อมูลทั่วไป</h2>
@@ -298,82 +462,7 @@
       <button type="submit">บันทึกข้อมูล</button>
     </section>
   </form>
-
-  <script>
-    // Theme toggle
-    document.getElementById('themeToggle').addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
-      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
-    });
-
-    // Load saved theme
-    if (localStorage.getItem('theme') === 'dark') {
-      document.documentElement.classList.add('dark');
-    }
-
-    // Show notification
-    function showNotification(message, type = 'success') {
-      const notification = document.createElement('div');
-      notification.className = `notification ${type}`;
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      setTimeout(() => {
-        notification.remove();
-      }, 3000);
-    }
-
-    // Form submission
-    document.getElementById('f').addEventListener('submit', async e => {
-      e.preventDefault();
-      const btn = e.target.querySelector('button');
-      btn.disabled = true;
-      btn.classList.add('loading');
-      btn.textContent = 'กำลังบันทึก...';
-
-      const formData = new FormData(e.target);
-      const data = Object.fromEntries(formData);
-      
-      // Add metadata
-      data.timestamp = new Date().toISOString();
-      data.deviceId = 'TM-PROCESS-CHECK';
-      data.version = '1.0.0';
-
-      try {
-        // const res = await fetch('http://localhost:1880/process-check', {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //     'Accept': 'application/json'
-        //   },
-        //   body: JSON.stringify(data)
-        // });
-        console.log(JSON.stringify(data));
-        if (!res.ok) {
-          throw new Error(`HTTP error! status: ${res.status}`);
-        }
-
-        const result = await res.json();
-        showNotification('บันทึกข้อมูลสำเร็จ');
-        e.target.reset();
-      } catch (err) {
-        console.error('Error:', err);
-        showNotification(`เกิดข้อผิดพลาด: ${err.message}`, 'error');
-      } finally {
-        btn.disabled = false;
-        btn.classList.remove('loading');
-        btn.textContent = 'บันทึกข้อมูล';
-      }
-    });
-
-    // Form validation
-    document.querySelectorAll('input[type="number"]').forEach(input => {
-      input.addEventListener('input', e => {
-        const value = parseFloat(e.target.value);
-        if (isNaN(value)) {
-          e.target.value = '';
-        }
-      });
-    });
-  </script>
 </body>
+
+
 </html>
