@@ -1,0 +1,191 @@
+<style>
+    * {
+        font-family: 'Prompt', sans-serif;
+        box-sizing: border-box;
+    }
+
+    :root {
+        --bg: #f8f9fa;
+        --fg: #2c3e50;
+        --panel: #ffffff;
+        --accent: rgb(250, 116, 75);
+        --success: #2ecc71;
+        --error: #e74c3c;
+        --input-bg: #ffffff;
+        --input-border: #e0e0e0;
+        --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        font-size: 1.2rem;
+        color: var(--accent);
+    }
+
+    form {
+        padding: 1rem;
+    }
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #ccc;
+    }
+
+    header h1 {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+
+    .flex {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .grid {
+        display: grid;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid-3 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 0.4rem;
+        border: 1px solid var(--input-border);
+        border-radius: 4px;
+        min-height: 40px;
+    }
+
+    input:focus,
+    select:focus {
+        outline: none;
+        border-color: var(--accent);
+    }
+
+    button[type="submit"] {
+        background: var(--accent);
+        color: white;
+        padding: 0.5rem 1rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 5px;
+        margin-top: 1rem;
+    }
+</style>
+
+<header>
+    <div style="display: flex; align-items: center; gap: 1rem;">
+        <div>
+            <h1>INPROCESS INSPECTION (PIPE)</h1>
+            <p>W-FM-QA-13 R09</p>
+        </div>
+    </div>
+    <div>
+        <select name="doc-mode" style="width: 200px;">
+            <option value="approved">CIR</option>
+            <option value="approved">REC</option>
+        </select>
+    </div>
+</header>
+
+<form id="form-inprocess">
+    <section class="grid grid-2">
+        <div>
+            <label>เครื่องจักร</label><input name="machine" required>
+            <label>วันที่ผลิต</label><input type="date" name="productionDate" required>
+            <label>เลขที่ใบสั่งผลิต</label><input name="orderNo">
+            <label>เกรดวัตถุดิบ</label><input name="materialGrade">
+        </div>
+        <div>
+            <label>Micrometer No.</label><input name="micrometerNo">
+            <label>Reflextrometer No.</label><input name="reflextrometerNo">
+            <label>หมายเลขตลับเมตร</label><input name="tapeNo">
+            <label>หมายเลขไม้บรรทัด</label><input name="rulerNo">
+        </div>
+    </section>
+
+    <section>
+        <h2>ลักษณะ</h2>
+        <div class="grid grid-2">
+            <div class="grid grid-3">
+                <label>1. OD</label>
+                <input type="text" name="odGradeB" placeholder="Grade B">
+                <input type="text" name="odScrap" placeholder="Scrap">
+            </div>
+            <div class="grid grid-3">
+                <label>2. ความตรง</label>
+                <input type="text" name="straightnessGradeB" placeholder="Grade B">
+                <input type="text" name="straightnessScrap" placeholder="Scrap">
+            </div>
+            <div class="grid grid-3">
+                <label>3. ตะเข็บรอยเชื่อม</label>
+                <input type="text" name="weldSeamGradeB" placeholder="Grade B">
+                <input type="text" name="weldSeamScrap" placeholder="Scrap">
+            </div>
+            <div class="grid grid-3">
+                <label>4. รอยขูดที่ผิวสินค้า</label>
+                <input type="text" name="surfaceScratchGradeB" placeholder="Grade B">
+                <input type="text" name="surfaceScratchScrap" placeholder="Scrap">
+            </div>
+            <div class="grid grid-3">
+                <label>5. สภาพรอยตัด</label>
+                <input type="text" name="cutConditionGradeB" placeholder="Grade B">
+                <input type="text" name="cutConditionScrap" placeholder="Scrap">
+            </div>
+            <div class="grid grid-3">
+                <label>6. รอยต่อวัตถุดิบ</label>
+                <input type="text" name="materialJointGradeB" placeholder="Grade B">
+                <input type="text" name="materialJointScrap" placeholder="Scrap">
+            </div>
+            <div class="grid grid-3">
+                <label>รวม (ชิ้น)</label>
+                <input type="number" name="totalPiecesGradeB" placeholder="Grade B">
+                <input type="number" name="totalPiecesScrap" placeholder="Scrap">
+            </div>
+            <div class="grid grid-3">
+                <label>รวม (กิโลกรัม)</label>
+                <input type="number" name="totalKgGradeB" placeholder="Grade B">
+                <input type="number" name="totalKgScrap" placeholder="Scrap">
+            </div>
+        </div>
+    </section>
+        <h2>รายการ</h2>
+        <div class="grid grid-3">
+            <div>
+                <p>เส้นผ่านศูนย์กลางภายนอก(OD)</p>
+                <div class="grid grid-2">
+                    <label>ท่อกลม</label>
+                    <input type="text" name="productCode">
+                </div>
+            </div>
+
+            <div>
+                
+            </div>
+        </div>
+    <section>
+
+    </section>
+
+    <section>
+        <button type="submit">บันทึกข้อมูล</button>
+    </section>
+</form>

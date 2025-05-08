@@ -1,468 +1,1052 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Approved Process Check Sheet :TM</title>
-  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg: #f8f9fa;
-      --fg: #2c3e50;
-      --panel: #ffffff;
-      --accent: rgb(250, 116, 75);
-      --success: #2ecc71;
-      --error: #e74c3c;
-      --input-bg: #ffffff;
-      --input-border: #e0e0e0;
-      --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipe Inspection Form</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Prompt', sans-serif;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    .dark {
-      --bg: #1a1a1a;
-      --fg: #ecf0f1;
-      --panel: #2c2c2c;
-      --input-bg: #333333;
-      --input-border: #444444;
-      --shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    }
+        :root {
+            --fg: rgba(255, 255, 255, 0.9);
+            --accent: #ff6b35;
+            --accent-light: #ff8a5c;
+            --accent-dark: #e85a2a;
+            --success: rgba(46, 204, 113, 0.8);
+            --error: rgba(231, 76, 60, 0.8);
+            --input-bg: rgba(0, 0, 0, 0.2);
+            --input-border: rgba(255, 255, 255, 0.2);
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+            --card-bg: rgba(0, 0, 0, 0.2);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --table-header-bg: rgba(0, 0, 0, 0.3);
+            --table-border: rgba(255, 255, 255, 0.3);
+            --hover-bg: rgba(0, 0, 0, 0.3);
+            --background-color: rgb(17, 18, 23);
+        }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+        body {
+            background-color: var(--background-color);
+            color: var(--fg);
+            line-height: 1.6;
+            padding: 20px;
+        }
 
-    body {
-      font-family: 'Prompt', sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      padding: 2rem;
-      transition: all 0.3s ease;
-      line-height: 1.6;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: transparent;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
 
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 2rem;
-      padding: 1rem;
-      background: var(--panel);
-      border-radius: 8px;
-      box-shadow: var(--shadow);
-    }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: linear-gradient(to right, rgba(255, 107, 53, 0.7), rgba(255, 138, 92, 0.7));
+            color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+            box-shadow: var(--shadow);
+        }
 
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
+        header h1 {
+            font-size: 1.5rem;
+            margin: 0;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
 
-    form section {
-      background: var(--panel);
-      padding: 1.5rem;
-      border-radius: 8px;
-      margin-bottom: 1.5rem;
-      box-shadow: var(--shadow);
-    }
+        header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
 
-    h2 {
-      margin-bottom: 1rem;
-      font-size: 1.2rem;
-      color: var(--accent);
-      font-weight: 500;
-    }
+        .doc-selector {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: var(--border-radius);
+            padding: 0.5rem;
+            color: white;
+            font-weight: 500;
+            min-width: 150px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-    .grid {
-      display: grid;
-      gap: 1rem;
-    }
+        .doc-selector:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.4);
+        }
 
-    .grid-2 {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: 1fr;
-      /* default 1 column for mobile */
-    }
+        .doc-selector option {
+            background: var(--accent);
+            color: white;
+        }
 
-    .grid-3 {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: 1fr;
-      /* 1 column for mobile */
-    }
+        form {
+            padding: 1rem;
+        }
 
-    @media (min-width: 768px) {
-      .grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-        /* 2 columns for tablet+ */
-      }
+        section {
+            margin-bottom: 2rem;
+            animation: fadeIn 0.5s ease-out;
+        }
 
-      .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
-        /* 3 columns for tablet+ */
-      }
-    }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
+        h2 {
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(255, 138, 92, 0.5);
+            position: relative;
+        }
 
-    .grid-4 {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 60px;
+            height: 2px;
+            background-color: var(--accent);
+        }
 
-    label {
-      display: block;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-      color: var(--fg);
-      font-weight: 400;
-    }
-
-    input,
-    select,
-    textarea,
-    button {
-      width: 100%;
-      padding: 0.75rem;
-      border: 1px solid var(--input-border);
-      border-radius: 6px;
-      font-size: 1rem;
-      background: var(--input-bg);
-      color: var(--fg);
-      transition: all 0.3s ease;
-    }
-
-    textarea {
-      min-height: 100px;
-    }
-
-    input:focus,
-    select:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
-    }
-
-    button {
-      background: var(--accent);
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    button:hover {
-      opacity: 0.9;
-      transform: translateY(-1px);
-    }
-
-    button:disabled {
-      opacity: 0.7;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    #themeToggle {
-      width: auto;
-      padding: 0.5rem 1rem;
-      font-size: 1.2rem;
-    }
-
-    .notification {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      padding: 1rem 2rem;
-      border-radius: 6px;
-      color: white;
-      font-weight: 500;
-      animation: slideIn 0.3s ease;
-      z-index: 1000;
-    }
-
-    .success {
-      background: var(--success);
-    }
-
-    .error {
-      background: var(--error);
-    }
-
-    @keyframes slideIn {
-      from {
-        transform: translateX(100%);
-        opacity: 0;
-      }
-
-      to {
-        transform: translateX(0);
-        opacity: 1;
-      }
-    }
-
-    .loading {
-      position: relative;
-    }
-
-    .loading::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 20px;
-      height: 20px;
-      margin: -10px 0 0 -10px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      <img src="public/tmt-logo.png" alt="TMT Steel Logo" style="width: 100px; height: auto;">
-      <h1>INPROCESS INSPECTION (PIPE)</h1>
-      <p>W-FM-QA-13 R09</p>
-    </div>
-    <div style="display: flex; align-items: center; gap: 1rem;">
-      <!-- <button id="themeToggle">🌓</button> -->
-      <select name="doc-mode" style="width: 320px;">
-        <option value="inprocess">ต้นฉบับ</option>
-        <option value="approved">CIR</option>
-        <option value="approved">REC</option>
-      </select>
-    </div>
-  </header>
-  <form id="form-inprocess">
-    <section>
-      <div class="grid grid-3">
-        <div>
-          <div><label>เครื่องจักร</label><input name="machine" required></div>
-          <div><label>วันที่ผลิต</label><input type="date" name="productionDate" required></div>
-          <div><label>เลขที่ใบสั่งผลิต</label><input name="orderNo"></div>
-          <div><label>เกรดวัตถุดิบ</label><input name="materialGrade"></div>
-          <div><label>ความกว้างฟิล์ม</label><input name="filmWidth"></div>
-          <div><label>ขนาดผลิต</label><input name="productSize"></div>
-          <div>
-            <label>ประเภทท่อ</label>
-            <select name="pipeType" required>
-              <option value="">-- เลือก --</option>
-              <option value="uncoated">ไม่เคลือบผิว</option>
-              <option value="galvanized">เคลือบสังกะสี (GI/GA)</option>
-            </select>
-          </div>
-          <div><label>Vernier No.</label><input name="vernierNo"></div>
-        </div>
-        <div>
-          <div><label>Micrometer No.</label><input name="micrometerNo"></div>
-          <div><label>Reflextrometer No.</label><input name="reflextrometerNo"></div>
-          <div><label>หมายเลขตลับเมตร</label><input name="tapeNo"></div>
-          <div><label>หมายเลขไม้บรรทัด</label><input name="rulerNo"></div>
-          <div><label>หมายเลขเครื่องชั่ง</label><input name="scaleNo"></div>
-          <div><label>หมายเลขจานวัดองศา</label><input name="angleDiscNo"></div>
-          <div>
-            <label>ทดสอบแนวตะเข็บด้วย Eddy Current Testing</label>
-            <select name="eddyTest" required>
-              <option value="">-- เลือก --</option>
-              <option value="true">ทดสอบแนวตะเข็บด้วย Eddy Current Testing</option>
-              <option value="false">ไม่ทดสอบแนวตะเข็บด้วย Eddy Current Testing</option>
-            </select>
-          </div>
-          <div><label>รายละเอียดการพ่นเครื่องหมายและฉลากการค้า</label>
-            <select name="trademarkDetails">
-              <option value="">-- เลือก --</option>
-              <option value="true">TMT 3 จุด</option>
-            </select>
-          </div>
-        </div>
-        <div>
-          <h2>รูปแบบอ้างอิงการตรวจเช็ค</h2>
-          <div style="
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        .flex {
+            display: flex;
+            align-items: center;
             gap: 1rem;
-          ">
-            <style>
-              .img-wrapper {
-                aspect-ratio: 1 / 1;
-                border: 1px solid #ccc;
-                background: #fff;
-                padding: 4px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-              }
-        
-              .img-wrapper img {
-                max-width: 100%;
-                max-height: 100%;
-                object-fit: contain;
-              }
-            </style>
-        
-            <div class="img-wrapper">
-              <img src="public/circle-ref.png" alt="circle-ref" />
-            </div>
-            <div class="img-wrapper">
-              <img src="public/square-ref.png" alt="square-ref" />
-            </div>
-          </div>
-        </div>
-        
-        
+        }
 
-      </div>
-    </section>
-    <section>
-      <div>
-        <input type="text" name="serialNo" value="TMT TIS 107 - "
-          onfocus="if(!this.value.startsWith('TMT TIS 107 - '))this.value='TMT TIS 107 - '; this.setSelectionRange(13, this.value.length);"
-          oninput="if(!this.value.startsWith('TMT TIS 107 - ')){this.value='TMT TIS 107 - '+this.value.slice(13).replace('TMT TIS 107 -','');}"
-          onkeydown="if((event.key==='Backspace'||event.key==='ArrowLeft')&&this.selectionStart<=13){event.preventDefault(); this.setSelectionRange(13,13);}" />
-      </div>
-    </section>
-    <!-- ข้อมูลทั่วไป -->
-    <section>
-      <h2>ข้อมูลทั่วไป</h2>
-      <div class="grid grid-2">
-        <div><label>เครื่องจักร</label><input name="machine" required></div>
-        <div><label>วันที่</label><input type="date" name="date" required></div>
-        <div><label>ใบสั่งผลิตเลขที่</label><input name="orderNumber" required></div>
-        <div><label>Size ที่ผลิต</label><input name="productionSize" required></div>
-        <div><label>เวลาที่ตรวจเช็ค</label><input type="time" name="checkTime" required></div>
-        <div><label>รายละเอียดการพ่นเครื่องหมายการค้า</label><input name="trademarkDetails" required></div>
-      </div>
-    </section>
-    <!-- เปลี่ยนเครื่องหมายการค้า -->
-    <section>
-      <h2>เปลี่ยนเครื่องหมายการค้า</h2>
-      <div class="grid grid-2">
-        <div><label>Size จาก</label><input name="sizeFrom" required></div>
-        <div><label>Size เป็น</label><input name="sizeTo" required></div>
-        <div><label>หนา จาก</label><input name="thicknessFrom" required></div>
-        <div><label>หนา เป็น</label><input name="thicknessTo" required></div>
-      </div>
-    </section>
-    <!-- 1. ตรวจเช็ควัตถุดิบ -->
-    <section>
-      <h2>1. ตรวจเช็ควัตถุดิบ</h2>
-      <div class="grid grid-2">
-        <div><label>หน้ากว้าง ตำแหน่ง 1 (mm)</label><input type="number" name="width1" step="0.01"></div>
-        <div><label>หน้ากว้าง ตำแหน่ง 2 (mm)</label><input type="number" name="width2" step="0.01"></div>
-        <div><label>หนา ขอบซ้าย (mm)</label><input type="number" name="thickLeft" step="0.01"></div>
-        <div><label>หนา ขอบขวา (mm)</label><input type="number" name="thickRight" step="0.01"></div>
-        <div>
-          <label>รอยคมเหล็กอยู่ด้านบน</label>
-          <select name="edgeUp" required>
-            <option value="">-- เลือก --</option>
-            <option value="yes">ใช่</option>
-            <option value="no">ไม่ใช่</option>
-          </select>
-        </div>
-        <div>
-          <label>ลักษณะทั่วไป</label>
-          <select name="surface" required>
-            <option value="">-- เลือก --</option>
-            <option value="normal">ปกติ</option>
-            <option value="rust">สนิม</option>
-            <option value="wavy">ขอบพริ้ว</option>
-          </select>
-        </div>
-      </div>
-    </section>
-    <!-- 2. การ Set up เครื่อง -->
-    <section>
-      <h2>2. การ Set up เครื่อง</h2>
-      <div class="grid grid-2">
-        <div>
-          <label>สภาพลูกรีด</label>
-          <select name="rollCondition" required>
-            <option value="">-- เลือก --</option>
-            <option value="good">ไม่สึก</option>
-            <option value="worn">สึก</option>
-          </select>
-        </div>
-        <div>
-          <label>Center Line Roll</label>
-          <select name="centerLine" required>
-            <option value="">-- เลือก --</option>
-            <option value="aligned">ตรง</option>
-            <option value="misaligned">ไม่ตรง</option>
-          </select>
-        </div>
-        <div>
-          <label>การใส่ลูกรีดแต่ละ Stand</label>
-          <select name="standFit" required>
-            <option value="">-- เลือก --</option>
-            <option value="correct">ถูกต้อง</option>
-            <option value="incorrect">ไม่ถูกต้อง</option>
-          </select>
-        </div>
-        <div>
-          <label>น้ำหล่อเย็นเข้าแกนเคส</label>
-          <select name="coolantIn" required>
-            <option value="">-- เลือก --</option>
-            <option value="normal">ปกติ</option>
-            <option value="abnormal">ไม่ปกติ</option>
-          </select>
-        </div>
-        <div>
-          <label>ข้อต่อแกนเคส</label>
-          <select name="caseJoint" required>
-            <option value="">-- เลือก --</option>
-            <option value="normal">ปกติ</option>
-            <option value="abnormal">ไม่ปกติ</option>
-          </select>
-        </div>
-        <div><label>Impeder Core O.D. (mm)</label><input type="number" name="impederOD" step="0.01"></div>
-        <div><label>Working Coil I.D. (mm)</label><input type="number" name="coilID" step="0.01"></div>
-        <div>
-          <label>ประเภท Working Coil</label>
-          <select name="coilType" required>
-            <option value="">-- เลือก --</option>
-            <option value="clean">สะอาด</option>
-            <option value="dirty">ไม่สะอาด</option>
-          </select>
-        </div>
-      </div>
-    </section>
-    <!-- 3. ค่าพารามิเตอร์ -->
-    <section>
-      <h2>3. ค่าพารามิเตอร์ในขณะเดินเครื่อง</h2>
-      <div class="grid grid-2">
-        <div><label>Speed (M/min)</label><input type="number" name="speed" step="0.1"></div>
-        <div><label>Power (KW)</label><input type="number" name="power" step="0.1"></div>
-        <div><label>Voltage (V)</label><input type="number" name="voltage" step="0.1"></div>
-        <div><label>Current (A)</label><input type="number" name="current" step="0.1"></div>
-      </div>
-    </section>
-    <!-- 4. คุณภาพชิ้นงาน -->
-    <section>
-      <h2>4. คุณภาพชิ้นงาน</h2>
-      <div class="grid grid-4">
-        <div><label>O.D. รวม Min (mm)</label><input type="number" name="odMin" step="0.01"></div>
-        <div><label>O.D. รวม Max (mm)</label><input type="number" name="odMax" step="0.01"></div>
-        <div><label>Tolerance ≤ %</label><input type="number" name="tolerance" step="0.01"></div>
-        <div><label>Surface Flatness (°)</label><input type="number" name="flatness" step="0.01"></div>
-      </div>
-    </section>
-    <section>
-      <button type="submit">บันทึกข้อมูล</button>
-    </section>
-  </form>
+        .grid {
+            display: grid;
+            gap: 1.25rem;
+            margin-top: 1rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        label {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--input-border);
+            border-radius: var(--border-radius);
+            min-height: 45px;
+            transition: var(--transition);
+            font-size: 0.95rem;
+            background: var(--input-bg);
+            color: white;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .input-group {
+            position: relative;
+        }
+
+        .input-group label {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-group label span {
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: normal;
+            font-size: 0.85rem;
+        }
+
+        .measurement-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            transition: var(--transition);
+            border: 1px solid var(--card-border);
+        }
+
+        .measurement-row:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .measurement-row label {
+            margin-bottom: 0;
+        }
+
+        .totals {
+            background-color: var(--card-bg);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-top: 1rem;
+            border: 1px solid var(--card-border);
+        }
+
+        button[type="submit"] {
+            background: var(--accent);
+            color: white;
+            padding: 0.75rem 2rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--border-radius);
+            margin-top: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        button[type="submit"]:hover {
+            background: var(--accent-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        button[type="submit"]:active {
+            transform: translateY(0);
+        }
+
+        .section-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--card-border);
+        }
+
+        p {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Measurement table styles */
+        .measurement-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .measurement-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .measurement-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--card-border);
+        }
+
+        .input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .input-row label {
+            min-width: 80px;
+            margin-bottom: 0;
+            white-space: nowrap;
+        }
+
+        .input-row input {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .input-row span {
+            color: white;
+            margin: 0 0.25rem;
+        }
+
+        .input-row p {
+            margin: 0 0.5rem;
+        }
+
+        .measurement-table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid var(--table-border);
+        }
+
+        .measurement-table th,
+        .measurement-table td {
+            border: 1px solid var(--table-border);
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .measurement-table th {
+            background-color: var(--table-header-bg);
+            color: var(--accent-light);
+            font-weight: 500;
+        }
+
+        .measurement-table input {
+            width: 100%;
+            padding: 0.5rem;
+            min-height: 35px;
+            text-align: center;
+            background: var(--input-bg);
+        }
+
+        .position-label {
+            padding: 0.5rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--accent-light);
+        }
+
+        /* Inspection table styles */
+        .inspection-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            border: 1px solid var(--table-border);
+        }
+
+        .inspection-table th,
+        .inspection-table td {
+            border: 1px solid var(--table-border);
+            padding: 0.75rem;
+        }
+
+        .inspection-table th {
+            background-color: var(--table-header-bg);
+            color: var(--accent-light);
+            font-weight: 500;
+            text-align: left;
+        }
+
+        .inspection-table td {
+            background-color: var(--card-bg);
+        }
+
+        .section-title {
+            color: var(--accent-light);
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 1em;
+            background-color: var(--accent);
+            margin-right: 0.5rem;
+            border-radius: 2px;
+        }
+
+        .coolant-section {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-top: 1rem;
+            border: 1px solid var(--card-border);
+        }
+
+        .inspection-item {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+        }
+
+        .inspection-item:hover {
+            background-color: var(--hover-bg);
+        }
+
+        .inspection-item label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .inspection-item label span {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            font-weight: normal;
+        }
+
+        .tab-container {
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        .tab-button {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--fg);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+
+        .tab-button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Mode-specific display */
+        .cir-only {
+            display: block;
+        }
+        
+        .rec-only {
+            display: none;
+        }
+        
+        /* When in REC mode */
+        body.rec-mode .cir-only {
+            display: none;
+        }
+        
+        body.rec-mode .rec-only {
+            display: block;
+        }
+        
+        /* Mode indicator */
+        .mode-indicator {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-left: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--card-border);
+        }
+        
+        .mode-indicator.cir {
+            background: rgba(46, 204, 113, 0.3);
+            border-color: rgba(46, 204, 113, 0.5);
+        }
+        
+        .mode-indicator.rec {
+            background: rgba(52, 152, 219, 0.3);
+            border-color: rgba(52, 152, 219, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .doc-selector {
+                width: 100%;
+            }
+            
+            form {
+                padding: 0.5rem;
+            }
+
+            .input-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .input-row label {
+                margin-bottom: 0.5rem;
+            }
+
+            .input-row input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>INPROCESS INSPECTION (PIPE)</h1>
+                <p>W-FM-QA-13 R09</p>
+            </div>
+            <div>
+                <select name="doc-mode" id="docModeSelector" class="doc-selector">
+                    <option value="cir">CIR</option>
+                    <option value="rec">REC</option>
+                </select>
+            </div>
+        </header>
+
+        <form id="form-inprocess">
+            <!-- General Information Section -->
+            <section class="section-card">
+                <h2>ข้อมูลทั่วไป</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="form-group">
+                            <label>เครื่องจักร</label>
+                            <input name="machine" required placeholder="ระบุเครื่องจักร">
+                        </div>
+                        <div class="form-group">
+                            <label>วันที่ผลิต</label>
+                            <input type="date" name="productionDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label>เลขที่ใบสั่งผลิต</label>
+                            <input name="orderNo" placeholder="ระบุเลขที่ใบสั่งผลิต">
+                        </div>
+                        <div class="form-group">
+                            <label>เกรดวัตถุดิบ</label>
+                            <input name="materialGrade" placeholder="ระบุเกรดวัตถุดิบ">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label>Micrometer No.</label>
+                            <input name="micrometerNo" placeholder="ระบุหมายเลข Micrometer">
+                        </div>
+                        <div class="form-group">
+                            <label>Reflextrometer No.</label>
+                            <input name="reflextrometerNo" placeholder="ระบุหมายเลข Reflextrometer">
+                        </div>
+                        <div class="form-group">
+                            <label>หมายเลขตลับเมตร</label>
+                            <input name="tapeNo" placeholder="ระบุหมายเลขตลับเมตร">
+                        </div>
+                        <div class="form-group">
+                            <label>หมายเลขไม้บรรทัด</label>
+                            <input name="rulerNo" placeholder="ระบุหมายเลขไม้บรรทัด">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Characteristics Section -->
+            <section class="section-card">
+                <h2>ลักษณะ</h2>
+                <div class="grid grid-2">
+                    <div class="measurement-row">
+                        <label>1. OD</label>
+                        <input type="text" name="odGradeB" placeholder="Grade B">
+                        <input type="text" name="odScrap" placeholder="Scrap">
+                    </div>
+                    <div class="measurement-row">
+                        <label>2. ความตรง</label>
+                        <input type="text" name="straightnessGradeB" placeholder="Grade B">
+                        <input type="text" name="straightnessScrap" placeholder="Scrap">
+                    </div>
+                    <div class="measurement-row">
+                        <label>3. ตะเข็บรอยเชื่อม</label>
+                        <input type="text" name="weldSeamGradeB" placeholder="Grade B">
+                        <input type="text" name="weldSeamScrap" placeholder="Scrap">
+                    </div>
+                    <div class="measurement-row">
+                        <label>4. รอยขูดที่ผิวสินค้า</label>
+                        <input type="text" name="surfaceScratchGradeB" placeholder="Grade B">
+                        <input type="text" name="surfaceScratchScrap" placeholder="Scrap">
+                    </div>
+                    <div class="measurement-row">
+                        <label>5. สภาพรอยตัด</label>
+                        <input type="text" name="cutConditionGradeB" placeholder="Grade B">
+                        <input type="text" name="cutConditionScrap" placeholder="Scrap">
+                    </div>
+                    <div class="measurement-row">
+                        <label>6. รอยต่อวัตถุดิบ</label>
+                        <input type="text" name="materialJointGradeB" placeholder="Grade B">
+                        <input type="text" name="materialJointScrap" placeholder="Scrap">
+                    </div>
+                </div>
+                <div class="totals">
+                    <div class="grid grid-2">
+                        <div class="measurement-row">
+                            <label>รวม (ชิ้น)</label>
+                            <input type="number" name="totalPiecesGradeB" placeholder="Grade B" id="totalPiecesGradeB" readonly>
+                            <input type="number" name="totalPiecesScrap" placeholder="Scrap" id="totalPiecesScrap" readonly>
+                        </div>
+                        <div class="measurement-row">
+                            <label>รวม (กิโลกรัม)</label>
+                            <input type="number" name="totalKgGradeB" placeholder="Grade B">
+                            <input type="number" name="totalKgScrap" placeholder="Scrap">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Measurements Section -->
+            <section class="section-card">
+                <h2>รายการวัด</h2>
+                <!-- Thickness Measurement Section -->
+                <div class="section-title">ความหนา</div>
+                <div class="measurement-container">
+                    <div class="measurement-details">
+                        <div class="input-row">
+                            <label>ความหนา</label>
+                            <input type="text" name="thickness" placeholder="ระบุความหนา">
+                        </div>
+                        <div class="input-row">
+                            <label>+/- </label>
+                            <input type="text" name="thicknessTolerance" placeholder="mm.">
+                        </div>
+                        <div class="input-row">
+                            <label>( </label>
+                            <input type="text" name="thicknessMinRange" placeholder="min">
+                            <span>-</span>
+                            <input type="text" name="thicknessMaxRange" placeholder="max">
+                            <span>mm. )</span>
+                        </div>
+                    </div>
+                    <div class="measurement-table-container">
+                        <table class="measurement-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th colspan="4">ตำแหน่งการวัด</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>ด้าน A</th>
+                                    <th>ด้าน B</th>
+                                    <th>ด้าน C</th>
+                                    <th>ด้าน D</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="position-label">หัว</td>
+                                    <td><input type="text" name="thicknessHeadA"></td>
+                                    <td><input type="text" name="thicknessHeadB"></td>
+                                    <td><input type="text" name="thicknessHeadC"></td>
+                                    <td><input type="text" name="thicknessHeadD"></td>
+                                </tr>
+                                <tr>
+                                    <td class="position-label">กลาง</td>
+                                    <td><input type="text" name="thicknessMiddleA"></td>
+                                    <td><input type="text" name="thicknessMiddleB"></td>
+                                    <td><input type="text" name="thicknessMiddleC"></td>
+                                    <td><input type="text" name="thicknessMiddleD"></td>
+                                </tr>
+                                <tr>
+                                    <td class="position-label">ท้าย</td>
+                                    <td><input type="text" name="thicknessTailA"></td>
+                                    <td><input type="text" name="thicknessTailB"></td>
+                                    <td><input type="text" name="thicknessTailC"></td>
+                                    <td><input type="text" name="thicknessTailD"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- OD Measurement Section -->
+                <div class="section-title">เส้นผ่านศูนย์กลางภายนอก(OD)</div>
+                <div class="measurement-container">
+                    <div class="measurement-details">
+                        <div class="input-row">
+                            <label>O ท่อกลม</label>
+                            <input type="text" name="roundPipe" placeholder="ระบุขนาด">
+                        </div>
+                        <div class="input-row">
+                            <label>+/- </label>
+                            <input type="text" name="tolerance" placeholder="mm.">
+                        </div>
+                        <div class="input-row">
+                            <label>( </label>
+                            <input type="text" name="minRange" placeholder="min">
+                            <span>-</span>
+                            <input type="text" name="maxRange" placeholder="max">
+                            <span>mm. )</span>
+                        </div>
+                    </div>
+                    <div class="measurement-table-container">
+                        <table class="measurement-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th colspan="4">ตำแหน่งการวัด</th>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <th>ด้าน A</th>
+                                    <th>ด้าน B</th>
+                                    <th>ด้าน C</th>
+                                    <th>ด้าน D</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="position-label">หัว</td>
+                                    <td><input type="text" name="headA"></td>
+                                    <td><input type="text" name="headB"></td>
+                                    <td><input type="text" name="headC"></td>
+                                    <td><input type="text" name="headD"></td>
+                                </tr>
+                                <tr>
+                                    <td class="position-label">ท้าย</td>
+                                    <td><input type="text" name="tailA"></td>
+                                    <td><input type="text" name="tailB"></td>
+                                    <td><input type="text" name="tailC"></td>
+                                    <td><input type="text" name="tailD"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- Workpiece Length Section -->
+                <div class="section-title">ความยาวชิ้นงาน (-0/+40mm.)</div>
+                <div class="measurement-details">
+                    <div class="input-row">
+                        <label>ความยาว</label>
+                        <input type="text" name="workpieceLengthMin" placeholder="mm.">
+                        <p>-</p>
+                        <input type="text" name="workpieceLengthMax" placeholder="mm.">
+                    </div>
+                    <div class="input-row">
+                        <label>ตำแหน่งที่ 1</label>
+                        <input type="text" name="workpieceLengthPosition1" placeholder="mm.">
+                        <label>ตำแหน่งที่ 2</label>
+                        <input type="text" name="workpieceLengthPosition2" placeholder="mm.">
+                    </div>
+                </div>
+                <div class="section-title">มวลต่อเมตร</div>
+                <div class="measurement-details">
+                    <div class="input-row">
+                        <label>min</label>
+                        <input type="text" name="weightPerMeterMin" placeholder="kg/m">
+                        <label>max</label>
+                        <input type="text" name="weightPerMeterMax" placeholder="kg/m">
+                    </div>
+                    <div class="input-row">
+                        <label>มวล(Kg)/เส้น</label>
+                        <input type="text" name="weightPerPiece" placeholder="kg">
+                        <label>มวล(Kg)/เมตร</label>
+                        <input type="text" name="weightPerMeter" placeholder="kg">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Inspection Section -->
+            <section class="section-card">
+                <h2>รายการตรวจสอบ</h2>
+                <div class="inspection-item">
+                    <label for="flexibility">ความโก่ง <span>≤ 0.3% ของความยาว</span></label>
+                    <input type="text" name="flexibility" placeholder="mm">
+                </div>
+                <div class="inspection-item">
+                    <label for="weldSeam">รอยตะเข็บเชื่อม</label>
+                    <select name="weldSeam" id="weldSeam">
+                        <option value="0">ไม่ปริแตก</option>
+                        <option value="1">ปริแตก</option>
+                    </select>
+                </div>
+                <div class="inspection-item">
+                    <label for="innerWeldSeam">แนวตะเข็บเชื่อมด้านใน <span>สำหรับท่อระบบ(ASTM A53 ,มอก.276)</span></label>
+                    <select name="innerWeldSeam" id="innerWeldSeam">
+                        <option value="0">size 1/2" - 2" (ตะเข็บในนูนปกติ)</option>
+                        <option value="1">size 2 1/2" - 6" (มีการขูดตะเข็บด้านใน)</option>
+                    </select>
+                </div>
+                <div class="inspection-item">
+                    <label for="generalAppearance">ลักษณะทั่วไป</label>
+                    <select name="generalAppearance" id="generalAppearance">
+                        <option value="0">ไม่มีรอยขูด/สนิม</option>
+                        <option value="1">มีรอยขูด/สนิม</option>
+                    </select>
+                </div>
+                <div class="inspection-item">
+                    <label for="cutCondition">สภาพรอยตัดจากใบเลื่อยสวย</label>
+                    <select name="cutCondition" id="cutCondition">
+                        <option value="0">ไม่มีรอยขูด/สนิม</option>
+                        <option value="1">มีรอยขูด/สนิม</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- CIR-specific section -->
+            <section class="section-card cir-only">
+                <h2>ข้อมูลเฉพาะ CIR</h2>
+                <div class="inspection-item">
+                    <label for="cirSpecificData">ข้อมูลเพิ่มเติมสำหรับ CIR</label>
+                    <input type="text" name="cirSpecificData" placeholder="ระบุข้อมูลเพิ่มเติม">
+                </div>
+                <div class="inspection-item">
+                    <label for="cirQualityCheck">การตรวจสอบคุณภาพเฉพาะ CIR</label>
+                    <select name="cirQualityCheck" id="cirQualityCheck">
+                        <option value="0">ผ่าน</option>
+                        <option value="1">ไม่ผ่าน</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- REC-specific section -->
+            <section class="section-card rec-only">
+                <h2>ข้อมูลเฉพาะ REC</h2>
+                <div class="inspection-item">
+                    <label for="recSpecificData">ข้อมูลเพิ่มเติมสำหรับ REC</label>
+                    <input type="text" name="recSpecificData" placeholder="ระบุข้อมูลเพิ่มเติม">
+                </div>
+                <div class="inspection-item">
+                    <label for="recQualityCheck">การตรวจสอบคุณภาพเฉพาะ REC</label>
+                    <select name="recQualityCheck" id="recQualityCheck">
+                        <option value="0">ผ่าน</option>
+                        <option value="1">ไม่ผ่าน</option>
+                    </select>
+                </div>
+                <div class="inspection-item">
+                    <label for="recAdditionalCheck">การตรวจสอบเพิ่มเติมสำหรับ REC</label>
+                    <select name="recAdditionalCheck" id="recAdditionalCheck">
+                        <option value="0">ผ่าน</option>
+                        <option value="1">ไม่ผ่าน</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Coolant Section -->
+            <section class="section-card">
+                <h2>ข้อมูล Coolant</h2>
+                <div class="coolant-section">
+                    <div class="inspection-item">
+                        <label for="coolantConcentration">ความเข้มข้น Coolant</label>
+                        <input type="text" name="coolantConcentration" placeholder="%">
+                    </div>
+                    <div class="inspection-item">
+                        <label for="coolantPH">ค่า pH Coolant <span>เช็คทุก 4 ชั่วโมง</span></label>
+                        <input type="text" name="coolantPH">
+                    </div>
+                    <div class="inspection-item">
+                        <label for="coolantHardness">ความกระด้าง Coolant</label>
+                        <input type="text" name="coolantHardness" placeholder="≤ 180 ppm">
+                    </div>
+                    <div class="inspection-item">
+                        <label for="coolantTemperature">อุณหภูมิ Coolant</label>
+                        <input type="text" name="coolantTemperature" placeholder="°C">
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <button type="submit" id="submitBtn">บันทึกข้อมูล</button>
+            </section>
+        </form>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the document mode selector and mode indicator
+        const docModeSelector = document.getElementById('docModeSelector');
+        const modeIndicator = document.getElementById('modeIndicator');
+        
+        // Set initial mode based on selector
+        const initialMode = docModeSelector.value;
+        setDocumentMode(initialMode);
+        
+        // Add event listener for mode changes
+        docModeSelector.addEventListener('change', function() {
+            setDocumentMode(this.value);
+        });
+        
+        // Function to set document mode and update UI
+        function setDocumentMode(mode) {
+            // Update body class
+            if (mode === 'rec') {
+                document.body.classList.add('rec-mode');
+                modeIndicator.textContent = 'REC Mode';
+                modeIndicator.className = 'mode-indicator rec';
+            } else {
+                document.body.classList.remove('rec-mode');
+                modeIndicator.textContent = 'CIR Mode';
+                modeIndicator.className = 'mode-indicator cir';
+            }
+            
+            // You can add additional mode-specific logic here
+            console.log(`Document mode changed to: ${mode}`);
+            
+            // Save the selected mode to localStorage for persistence
+            localStorage.setItem('documentMode', mode);
+        }
+        
+        // Check if there's a saved mode in localStorage
+        const savedMode = localStorage.getItem('documentMode');
+        if (savedMode) {
+            docModeSelector.value = savedMode;
+            setDocumentMode(savedMode);
+        }
+
+        // Form validation and auto-calculation
+        const form = document.getElementById('form-inprocess');
+        const submitBtn = document.getElementById('submitBtn');
+
+        // Auto-calculate totals
+        const gradeB_inputs = [
+            'odGradeB', 'straightnessGradeB', 'weldSeamGradeB', 
+            'surfaceScratchGradeB', 'cutConditionGradeB', 'materialJointGradeB'
+        ];
+        const scrap_inputs = [
+            'odScrap', 'straightnessScrap', 'weldSeamScrap', 
+            'surfaceScratchScrap', 'cutConditionScrap', 'materialJointScrap'
+        ];
+        [...gradeB_inputs, ...scrap_inputs].forEach(inputName => {
+            const input = document.querySelector(`input[name="${inputName}"]`);
+            if (input) {
+                input.addEventListener('input', calculateTotals);
+            }
+        });
+        function calculateTotals() {
+            let totalGradeB = 0;
+            let totalScrap = 0;
+            gradeB_inputs.forEach(inputName => {
+                const input = document.querySelector(`input[name="${inputName}"]`);
+                if (input && input.value) {
+                    const value = parseInt(input.value);
+                    if (!isNaN(value)) {
+                        totalGradeB += value;
+                    }
+                }
+            });
+            scrap_inputs.forEach(inputName => {
+                const input = document.querySelector(`input[name="${inputName}"]`);
+                if (input && input.value) {
+                    const value = parseInt(input.value);
+                    if (!isNaN(value)) {
+                        totalScrap += value;
+                    }
+                }
+            });
+            document.getElementById('totalPiecesGradeB').value = totalGradeB;
+            document.getElementById('totalPiecesScrap').value = totalScrap;
+        }
+        
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'var(--error)';
+                    field.classList.add('shake');
+                    setTimeout(() => {
+                        field.classList.remove('shake');
+                    }, 500);
+                } else {
+                    field.style.borderColor = 'var(--input-border)';
+                }
+            });
+            if (isValid) {
+                alert('บันทึกข้อมูลสำเร็จ!');
+            } else {
+                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            }
+        });
+        
+        // Add animation for submit button
+        submitBtn.addEventListener('mouseover', function() {
+            this.style.transform = 'translateY(-2px)';
+        });
+        submitBtn.addEventListener('mouseout', function() {
+            this.style.transform = 'translateY(0)';
+        });
+        
+        // Add keyframe animation for shake effect
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+            .shake {
+                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+            }
+        `;
+        document.head.appendChild(style);
+    });
+    </script>
 </body>
-
-
 </html>
