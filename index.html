@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,8 +39,6 @@
         body {
             background-color: var(--background-color);
             color: var(--fg);
-            line-height: 1.6;
-            padding: 20px;
         }
 
         .container {
@@ -107,8 +106,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         h2 {
@@ -272,7 +278,6 @@
             color: rgba(255, 255, 255, 0.8);
         }
 
-        /* Measurement table styles */
         .measurement-container {
             display: grid;
             grid-template-columns: 1fr;
@@ -358,7 +363,6 @@
             color: var(--accent-light);
         }
 
-        /* Inspection table styles */
         .inspection-table {
             width: 100%;
             border-collapse: collapse;
@@ -475,25 +479,22 @@
             animation: fadeIn 0.3s ease-out;
         }
 
-        /* Mode-specific display */
         .cir-only {
             display: block;
         }
-        
+
         .rec-only {
             display: none;
         }
-        
-        /* When in REC mode */
+
         body.rec-mode .cir-only {
             display: none;
         }
-        
+
         body.rec-mode .rec-only {
             display: block;
         }
-        
-        /* Mode indicator */
+
         .mode-indicator {
             display: inline-block;
             padding: 0.3rem 0.8rem;
@@ -504,32 +505,34 @@
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid var(--card-border);
         }
-        
+
         .mode-indicator.cir {
             background: rgba(46, 204, 113, 0.3);
             border-color: rgba(46, 204, 113, 0.5);
         }
-        
+
         .mode-indicator.rec {
             background: rgba(52, 152, 219, 0.3);
             border-color: rgba(52, 152, 219, 0.5);
         }
 
         @media (max-width: 768px) {
-            .grid-2, .grid-3 {
+
+            .grid-2,
+            .grid-3 {
                 grid-template-columns: 1fr;
             }
-            
+
             header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 1rem;
             }
-            
+
             .doc-selector {
                 width: 100%;
             }
-            
+
             form {
                 padding: 0.5rem;
             }
@@ -547,14 +550,55 @@
                 width: 100%;
             }
         }
+
+        .mode-switch-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .mode-switch-button {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--fg);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .mode-switch-button:hover {
+            background: var(--hover-bg);
+        }
+
+        .mode-switch-button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        .mode-switch-button.cir {
+            border-color: rgba(46, 204, 113, 0.5);
+        }
+
+        .mode-switch-button.rec {
+            border-color: rgba(52, 152, 219, 0.5);
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <header>
             <div>
                 <h1>INPROCESS INSPECTION (PIPE)</h1>
                 <p>W-FM-QA-13 R09</p>
+                <div class="mode-switch-container">
+                    <button type="button" class="mode-switch-button cir active" data-mode="cir">CIR Mode</button>
+                    <button type="button" class="mode-switch-button rec" data-mode="rec">REC Mode</button>
+                </div>
             </div>
             <div>
                 <select name="doc-mode" id="docModeSelector" class="doc-selector">
@@ -565,7 +609,6 @@
         </header>
 
         <form id="form-inprocess">
-            <!-- General Information Section -->
             <section class="section-card">
                 <h2>ข้อมูลทั่วไป</h2>
                 <div class="grid grid-2">
@@ -586,8 +629,35 @@
                             <label>เกรดวัตถุดิบ</label>
                             <input name="materialGrade" placeholder="ระบุเกรดวัตถุดิบ">
                         </div>
+                        <div class="form-group">
+                            <label>ความกว้างฟิล์ม</label>
+                            <input name="filmWidth" placeholder="ระบุความกว้างฟิล์ม">
+                        </div>
+                        <div class="form-group">
+                            <label>ขนาดผลิต</label>
+                            <input name="productSize" placeholder="ระบุขนาดผลิต">
+                        </div>
+                        <div class="form-group">
+                            <label>ประเภทท่อ</label>
+                            <select name="productType" id="productType">
+                                <option value="0">ไม่เคลือบผิว</option>
+                                <option value="1"> เคลือบสังกะสี (GI/GA)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="eddyCurrentTesting">ทดสอบบริเวณแนวตะเข็บด้วยเครื่องอิเล็กโตรแมกเนติก(Eddy
+                                Current Testing)</label>
+                            <select name="eddyCurrentTesting" id="eddyCurrentTesting">
+                                <option value="0">ไม่ทดสอบ</option>
+                                <option value="1">ทดสอบ</option>
+                            </select>
+                        </div>
                     </div>
                     <div>
+                        <div class="form-group">
+                            <label>Vernier No.</label>
+                            <input name="vernierNo" placeholder="ระบุหมายเลข Vernier">
+                        </div>
                         <div class="form-group">
                             <label>Micrometer No.</label>
                             <input name="micrometerNo" placeholder="ระบุหมายเลข Micrometer">
@@ -604,11 +674,61 @@
                             <label>หมายเลขไม้บรรทัด</label>
                             <input name="rulerNo" placeholder="ระบุหมายเลขไม้บรรทัด">
                         </div>
+                        <div class="form-group">
+                            <label>หมายเลขเครื่องชั่ง</label>
+                            <input name="scaleNo" placeholder="ระบุหมายเลขเครื่องชั่ง">
+                        </div>
+                        <div class="form-group">
+                            <label>หมายเลขจานวัดองศา</label>
+                            <input name="degreeNo" placeholder="ระบุหมายเลขจานวัดองศา">
+                        </div>
+                        <div class="form-group">
+                            <label for="productDetail">รายละเอียดการพ่นเครื่องหมายและฉลากการค้า</label>
+                            <select name="productDetail" id="productDetail">
+                                <option value="0">TMT 3 จุด</option>
+                                <option value="1">TMT TIS 107</option>
+                            </select>
+                            <input type="text" name="productDetailTMTTIS107" id="productDetailTMTTIS107"
+                                placeholder="ระบุรายละเอียดอื่นๆ" style="display: none; margin-top: 0.5rem;">
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Characteristics Section -->
+            <section class="section-card">
+                <h2>รูปแบบการจัดเรียงสินค้าเพื่อทำการแพ็ค</h2>
+                <div class="grid grid-2">
+                    <div>
+                        <div class="form-group">
+                            <label>รูปแบบการจัดเรียงสินค้าเพื่อทำการแพ็ค</label>
+                            <select name="packagingType" id="packagingType">
+                                <option value="hexagonal">รูปหกเหลี่ยม</option>
+                                <option value="square">รูปสี่เหลี่ยมจัตุรัส</option>
+                                <option value="rectangular">รูปสี่เหลี่ยมผืนผ้า</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>ขนาดสายรัด</label>
+                            <input type="number" name="wireRopeSize" id="wireRopeSize" placeholder="mm.">
+                        </div>
+                        <div class="form-group">
+                            <label>จำนวนแพ็คสายรัด</label>
+                            <input type="number" name="wireRopePackage" id="wireRopePackage" placeholder="เส้น">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label>น้ำหนักต่อมัด</label>
+                            <input type="number" name="wireRopeWeight" id="wireRopeWeight" placeholder="กิโลกรัม">
+                        </div>
+                        <div class="form-group">
+                            <label>จำนวนทั้งหมดของเกรด A</label>
+                            <input type="number" name="totalGradeA" id="totalGradeA" placeholder="เส้น">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <section class="section-card">
                 <h2>ลักษณะ</h2>
                 <div class="grid grid-2">
@@ -647,8 +767,10 @@
                     <div class="grid grid-2">
                         <div class="measurement-row">
                             <label>รวม (ชิ้น)</label>
-                            <input type="number" name="totalPiecesGradeB" placeholder="Grade B" id="totalPiecesGradeB" readonly>
-                            <input type="number" name="totalPiecesScrap" placeholder="Scrap" id="totalPiecesScrap" readonly>
+                            <input type="number" name="totalPiecesGradeB" placeholder="Grade B" id="totalPiecesGradeB"
+                                readonly>
+                            <input type="number" name="totalPiecesScrap" placeholder="Scrap" id="totalPiecesScrap"
+                                readonly>
                         </div>
                         <div class="measurement-row">
                             <label>รวม (กิโลกรัม)</label>
@@ -659,158 +781,376 @@
                 </div>
             </section>
 
-            <!-- Measurements Section -->
             <section class="section-card">
                 <h2>รายการวัด</h2>
-                <!-- Thickness Measurement Section -->
-                <div class="section-title">ความหนา</div>
-                <div class="measurement-container">
+                <div class="cir-only">
+                    <div class="section-title">เส้นผ่านศูนย์กลางภายนอก(OD)</div>
+                    <div class="measurement-container">
+                        <div class="measurement-details">
+                            <div class="input-row">
+                                <label>O ท่อกลม</label>
+                                <input type="text" name="roundPipe" placeholder="ระบุขนาด">
+                            </div>
+                            <div class="input-row">
+                                <label>+/- </label>
+                                <input type="text" name="tolerance" placeholder="mm.">
+                            </div>
+                            <div class="input-row">
+                                <label>( </label>
+                                <input type="text" name="minRange" placeholder="min">
+                                <span>-</span>
+                                <input type="text" name="maxRange" placeholder="max">
+                                <span>mm. )</span>
+                            </div>
+                        </div>
+                        <div class="measurement-table-container">
+                            <table class="measurement-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th colspan="4">ตำแหน่งการวัด</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>ด้าน A</th>
+                                        <th>ด้าน B</th>
+                                        <th>ด้าน C</th>
+                                        <th>ด้าน D</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="position-label">หัว</td>
+                                        <td><input type="text" name="headA"></td>
+                                        <td><input type="text" name="headB"></td>
+                                        <td><input type="text" name="headC"></td>
+                                        <td><input type="text" name="headD"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="position-label">ท้าย</td>
+                                        <td><input type="text" name="tailA"></td>
+                                        <td><input type="text" name="tailB"></td>
+                                        <td><input type="text" name="tailC"></td>
+                                        <td><input type="text" name="tailD"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rec-only">
+                    <div class="section-title">ท่อสี่เหลี่ยมจัตุรัส/ผืนผ้า</div>
+                    <div class="measurement-container">
+                        <div class="measurement-details">
+                            <div class="input-row">
+                                <label>ท่อสี่เหลี่ยมจัตุรัส/ผืนผ้า</label>
+                                <span>( </span>
+                                <input type="text" name="squarePipeMax" placeholder="ระบุขนาด">
+                                <span>+/-</span>
+                                <input type="text" name="squarePipeMin" placeholder="mm.">
+                                <span>mm. )</span>
+                            </div>
+                            <div class="input-row">
+                                <span>( </span>
+                                <input type="text" name="squarePipeRangeMin" placeholder="min">
+                                <span>-</span>
+                                <input type="text" name="squarePipeRangeMax" placeholder="max">
+                                <span>mm. )</span>
+                            </div>
+                            <div class="input-row">
+                                <span>( </span>
+                                <input type="text" name="squarePipeMax2" placeholder="ระบุขนาด">
+                                <span>+/-</span>
+                                <input type="text" name="squarePipeMin2" placeholder="mm.">
+                                <span>mm. )</span>
+                            </div>
+                            <div class="input-row">
+                                <span>( </span>
+                                <input type="text" name="squarePipeRangeMin2" placeholder="min">
+                                <span>-</span>
+                                <input type="text" name="squarePipeRangeMax2" placeholder="max">
+                                <span>mm. )</span>
+                            </div>
+                        </div>
+                        <div class="measurement-table-container">
+                            <table class="measurement-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th colspan="4">ตำแหน่งการวัด</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th>ด้าน A</th>
+                                        <th>ด้าน B</th>
+                                        <th>ด้าน C</th>
+                                        <th>ด้าน D</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="position-label">หัว</td>
+                                        <td><input type="text" name="headA"></td>
+                                        <td><input type="text" name="headB"></td>
+                                        <td><input type="text" name="headC"></td>
+                                        <td><input type="text" name="headD"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="position-label">กลาง</td>
+                                        <td><input type="text" name="tailA"></td>
+                                        <td><input type="text" name="tailB"></td>
+                                        <td><input type="text" name="tailC"></td>
+                                        <td><input type="text" name="tailD"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="position-label">ท้าย</td>
+                                        <td><input type="text" name="tailA"></td>
+                                        <td><input type="text" name="tailB"></td>
+                                        <td><input type="text" name="tailC"></td>
+                                        <td><input type="text" name="tailD"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rec-only grid grid-2">
+                    <div>
+                        <div class="section-title">ความหนา</div>
+                        <div class="measurement-container">
+                            <div class="measurement-details">
+                                <div class="input-row">
+                                    <label>ค่ากลาง</label>
+                                    <input type="text" name="thickness" placeholder="ระบุความหนา">
+                                </div>
+                                <div class="input-row">
+                                    <span>+ Max</span>
+                                    <input type="text" name="thicknessMax" placeholder="mm.">
+                                </div>
+                                <div class="input-row">
+                                    <span>- Min</span>
+                                    <input type="text" name="thicknessMin" placeholder="mm.">
+                                </div>
+                                <div class="input-row">
+                                    <span>( </span>
+                                    <input type="text" name="thicknessRangeMin" placeholder="min">
+                                    <span>-</span>
+                                    <input type="text" name="thicknessRangeMax" placeholder="max">
+                                    <span>mm. )</span>
+                                </div>
+                            </div>
+                            <div class="measurement-table-container">
+                                <table class="measurement-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th colspan="4">ตำแหน่งการวัด</th>
+                                        </tr>
+                                        <tr>
+                                            <th></th>
+                                            <th>ตำแหน่ง A</th>
+                                            <th>ตำแหน่ง B</th>
+                                            <th>ตำแหน่ง C</th>
+                                            <th>ตำแหน่ง D</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="position-label">หัว</td>
+                                            <td><input type="text" name="thicknessHeadA"></td>
+                                            <td><input type="text" name="thicknessHeadB"></td>
+                                            <td><input type="text" name="thicknessHeadC"></td>
+                                            <td><input type="text" name="thicknessHeadD"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="position-label">กลาง</td>
+                                            <td><input type="text" name="thicknessMiddleA"></td>
+                                            <td><input type="text" name="thicknessMiddleB"></td>
+                                            <td><input type="text" name="thicknessMiddleC"></td>
+                                            <td><input type="text" name="thicknessMiddleD"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="position-label">ท้าย</td>
+                                            <td><input type="text" name="thicknessTailA"></td>
+                                            <td><input type="text" name="thicknessTailB"></td>
+                                            <td><input type="text" name="thicknessTailC"></td>
+                                            <td><input type="text" name="thicknessTailD"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div>
+                            <div class="section-title">ความได้ฉากประชิด (88.5 - 91.5 องศา)</div>
+                            <div class="">
+                                <div class="">
+                                    <table class="measurement-table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th colspan="4">ตำแหน่งการวัด</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>ด้าน A</th>
+                                                <th>ด้าน B</th>
+                                                <th>ด้าน C</th>
+                                                <th>ด้าน D</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="position-label">หัว</td>
+                                                <td><input type="text" name="headA"></td>
+                                                <td><input type="text" name="headB"></td>
+                                                <td><input type="text" name="headC"></td>
+                                                <td><input type="text" name="headD"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="position-label">กลาง</td>
+                                                <td><input type="text" name="tailA"></td>
+                                                <td><input type="text" name="tailB"></td>
+                                                <td><input type="text" name="tailC"></td>
+                                                <td><input type="text" name="tailD"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="position-label">ท้าย</td>
+                                                <td><input type="text" name="tailA"></td>
+                                                <td><input type="text" name="tailB"></td>
+                                                <td><input type="text" name="tailC"></td>
+                                                <td><input type="text" name="tailD"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rec-only">
+                            <div class="section-title">ส่วนโค้งของมุม (S) (ไม่เกิน 3t)</div>
+                            <input type="text" name="angleS" placeholder="≤ mm">
+                            <div class="">
+                                <div class="">
+                                    <table class="measurement-table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th colspan="4">ส่วนโค้งของมุม (S)</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>ด้าน A</th>
+                                                <th>ด้าน B</th>
+                                                <th>ด้าน C</th>
+                                                <th>ด้าน D</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="position-label">ส่วนโค้งของมุม (S)</td>
+                                                <td><input type="text" name="headA"></td>
+                                                <td><input type="text" name="headB"></td>
+                                                <td><input type="text" name="headC"></td>
+                                                <td><input type="text" name="headD"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="position-label">ความกว้างส่วนแบน</td>
+                                                <td><input type="text" name="tailA"></td>
+                                                <td><input type="text" name="tailB"></td>
+                                                <td><input type="text" name="tailC"></td>
+                                                <td><input type="text" name="tailD"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="position-label">S</td>
+                                                <td><input type="text" name="SA"></td>
+                                                <td><input type="text" name="SB"></td>
+                                                <td><input type="text" name="SC"></td>
+                                                <td><input type="text" name="SD"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="rec-only">
+                            <div class="section-title">ความโค้งหรือความเว้าของส่วนราบ</div>
+                            <span>(เฉพาะท่อสี่เหลี่ยมจัตุรัส,ผืนผ้า)
+                                OD ≤ 100 mm  :  0.5 mm.
+                                      OD > 100 mm : 0.5% ของขนาด</span>
+                            <div class="">
+                                <div class="">
+                                    <table class="measurement-table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th colspan="4">ส่วนโค้งของมุม (S)</th>
+                                            </tr>
+                                            <tr>
+                                                <th></th>
+                                                <th>ด้าน A-C</th>
+                                                <th>ด้าน B-D</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="position-label">ตำแหน่ง 1</td>
+                                                <td><input type="text" name="headA"></td>
+                                                <td><input type="text" name="headB"></td>
+                                            </tr>
+                                            <tr>
+                                                <td class="position-label">ตำแหน่ง 2</td>
+                                                <td><input type="text" name="tailA"></td>
+                                                <td><input type="text" name="tailB"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="section-title">ความยาวชิ้นงาน</div>
                     <div class="measurement-details">
                         <div class="input-row">
-                            <label>ความหนา</label>
-                            <input type="text" name="thickness" placeholder="ระบุความหนา">
+                            <label>ความยาว</label>
+                            <input type="text" name="workpieceLengthMin" placeholder="mm.">
+                            <p>-</p>
+                            <input type="text" name="workpieceLengthMax" placeholder="mm.">
                         </div>
                         <div class="input-row">
-                            <label>+/- </label>
-                            <input type="text" name="thicknessTolerance" placeholder="mm.">
+                            <label>ตำแหน่งที่ 1</label>
+                            <input type="text" name="workpieceLengthPosition1" placeholder="mm.">
+                            <label>ตำแหน่งที่ 2</label>
+                            <input type="text" name="workpieceLengthPosition2" placeholder="mm.">
                         </div>
-                        <div class="input-row">
-                            <label>( </label>
-                            <input type="text" name="thicknessMinRange" placeholder="min">
-                            <span>-</span>
-                            <input type="text" name="thicknessMaxRange" placeholder="max">
-                            <span>mm. )</span>
-                        </div>
-                    </div>
-                    <div class="measurement-table-container">
-                        <table class="measurement-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th colspan="4">ตำแหน่งการวัด</th>
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                    <th>ด้าน A</th>
-                                    <th>ด้าน B</th>
-                                    <th>ด้าน C</th>
-                                    <th>ด้าน D</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="position-label">หัว</td>
-                                    <td><input type="text" name="thicknessHeadA"></td>
-                                    <td><input type="text" name="thicknessHeadB"></td>
-                                    <td><input type="text" name="thicknessHeadC"></td>
-                                    <td><input type="text" name="thicknessHeadD"></td>
-                                </tr>
-                                <tr>
-                                    <td class="position-label">กลาง</td>
-                                    <td><input type="text" name="thicknessMiddleA"></td>
-                                    <td><input type="text" name="thicknessMiddleB"></td>
-                                    <td><input type="text" name="thicknessMiddleC"></td>
-                                    <td><input type="text" name="thicknessMiddleD"></td>
-                                </tr>
-                                <tr>
-                                    <td class="position-label">ท้าย</td>
-                                    <td><input type="text" name="thicknessTailA"></td>
-                                    <td><input type="text" name="thicknessTailB"></td>
-                                    <td><input type="text" name="thicknessTailC"></td>
-                                    <td><input type="text" name="thicknessTailD"></td>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                 </div>
-                <!-- OD Measurement Section -->
-                <div class="section-title">เส้นผ่านศูนย์กลางภายนอก(OD)</div>
-                <div class="measurement-container">
+
+                <div>
+                    <div class="section-title">มวลต่อเมตร</div>
                     <div class="measurement-details">
                         <div class="input-row">
-                            <label>O ท่อกลม</label>
-                            <input type="text" name="roundPipe" placeholder="ระบุขนาด">
+                            <label>min</label>
+                            <input type="text" name="weightPerMeterMin" placeholder="kg/m">
+                            <label>max</label>
+                            <input type="text" name="weightPerMeterMax" placeholder="kg/m">
                         </div>
                         <div class="input-row">
-                            <label>+/- </label>
-                            <input type="text" name="tolerance" placeholder="mm.">
+                            <label>มวล(Kg)/เส้น</label>
+                            <input type="text" name="weightPerPiece" placeholder="kg">
+                            <label>มวล(Kg)/เมตร</label>
+                            <input type="text" name="weightPerMeter" placeholder="kg">
                         </div>
-                        <div class="input-row">
-                            <label>( </label>
-                            <input type="text" name="minRange" placeholder="min">
-                            <span>-</span>
-                            <input type="text" name="maxRange" placeholder="max">
-                            <span>mm. )</span>
-                        </div>
-                    </div>
-                    <div class="measurement-table-container">
-                        <table class="measurement-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th colspan="4">ตำแหน่งการวัด</th>
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                    <th>ด้าน A</th>
-                                    <th>ด้าน B</th>
-                                    <th>ด้าน C</th>
-                                    <th>ด้าน D</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="position-label">หัว</td>
-                                    <td><input type="text" name="headA"></td>
-                                    <td><input type="text" name="headB"></td>
-                                    <td><input type="text" name="headC"></td>
-                                    <td><input type="text" name="headD"></td>
-                                </tr>
-                                <tr>
-                                    <td class="position-label">ท้าย</td>
-                                    <td><input type="text" name="tailA"></td>
-                                    <td><input type="text" name="tailB"></td>
-                                    <td><input type="text" name="tailC"></td>
-                                    <td><input type="text" name="tailD"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <!-- Workpiece Length Section -->
-                <div class="section-title">ความยาวชิ้นงาน (-0/+40mm.)</div>
-                <div class="measurement-details">
-                    <div class="input-row">
-                        <label>ความยาว</label>
-                        <input type="text" name="workpieceLengthMin" placeholder="mm.">
-                        <p>-</p>
-                        <input type="text" name="workpieceLengthMax" placeholder="mm.">
-                    </div>
-                    <div class="input-row">
-                        <label>ตำแหน่งที่ 1</label>
-                        <input type="text" name="workpieceLengthPosition1" placeholder="mm.">
-                        <label>ตำแหน่งที่ 2</label>
-                        <input type="text" name="workpieceLengthPosition2" placeholder="mm.">
-                    </div>
-                </div>
-                <div class="section-title">มวลต่อเมตร</div>
-                <div class="measurement-details">
-                    <div class="input-row">
-                        <label>min</label>
-                        <input type="text" name="weightPerMeterMin" placeholder="kg/m">
-                        <label>max</label>
-                        <input type="text" name="weightPerMeterMax" placeholder="kg/m">
-                    </div>
-                    <div class="input-row">
-                        <label>มวล(Kg)/เส้น</label>
-                        <input type="text" name="weightPerPiece" placeholder="kg">
-                        <label>มวล(Kg)/เมตร</label>
-                        <input type="text" name="weightPerMeter" placeholder="kg">
                     </div>
                 </div>
             </section>
 
-            <!-- Inspection Section -->
             <section class="section-card">
                 <h2>รายการตรวจสอบ</h2>
                 <div class="inspection-item">
@@ -825,7 +1165,8 @@
                     </select>
                 </div>
                 <div class="inspection-item">
-                    <label for="innerWeldSeam">แนวตะเข็บเชื่อมด้านใน <span>สำหรับท่อระบบ(ASTM A53 ,มอก.276)</span></label>
+                    <label for="innerWeldSeam">แนวตะเข็บเชื่อมด้านใน <span>สำหรับท่อระบบ(ASTM A53
+                            ,มอก.276)</span></label>
                     <select name="innerWeldSeam" id="innerWeldSeam">
                         <option value="0">size 1/2" - 2" (ตะเข็บในนูนปกติ)</option>
                         <option value="1">size 2 1/2" - 6" (มีการขูดตะเข็บด้านใน)</option>
@@ -847,7 +1188,6 @@
                 </div>
             </section>
 
-            <!-- CIR-specific section -->
             <section class="section-card cir-only">
                 <h2>ข้อมูลเฉพาะ CIR</h2>
                 <div class="inspection-item">
@@ -863,7 +1203,6 @@
                 </div>
             </section>
 
-            <!-- REC-specific section -->
             <section class="section-card rec-only">
                 <h2>ข้อมูลเฉพาะ REC</h2>
                 <div class="inspection-item">
@@ -886,7 +1225,6 @@
                 </div>
             </section>
 
-            <!-- Coolant Section -->
             <section class="section-card">
                 <h2>ข้อมูล Coolant</h2>
                 <div class="coolant-section">
@@ -916,137 +1254,174 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Get the document mode selector and mode indicator
-        const docModeSelector = document.getElementById('docModeSelector');
-        const modeIndicator = document.getElementById('modeIndicator');
-        
-        // Set initial mode based on selector
-        const initialMode = docModeSelector.value;
-        setDocumentMode(initialMode);
-        
-        // Add event listener for mode changes
-        docModeSelector.addEventListener('change', function() {
-            setDocumentMode(this.value);
-        });
-        
-        // Function to set document mode and update UI
-        function setDocumentMode(mode) {
-            // Update body class
-            if (mode === 'rec') {
-                document.body.classList.add('rec-mode');
-                modeIndicator.textContent = 'REC Mode';
-                modeIndicator.className = 'mode-indicator rec';
-            } else {
-                document.body.classList.remove('rec-mode');
-                modeIndicator.textContent = 'CIR Mode';
-                modeIndicator.className = 'mode-indicator cir';
+        class DocumentMode {
+            constructor() {
+                this.currentMode = localStorage.getItem('documentMode') || 'cir';
+                this.modeButtons = document.querySelectorAll('.mode-switch-button');
+                this.docSelector = document.getElementById('docModeSelector');
+                this.initializeMode();
+                this.setupEventListeners();
             }
-            
-            // You can add additional mode-specific logic here
-            console.log(`Document mode changed to: ${mode}`);
-            
-            // Save the selected mode to localStorage for persistence
-            localStorage.setItem('documentMode', mode);
-        }
-        
-        // Check if there's a saved mode in localStorage
-        const savedMode = localStorage.getItem('documentMode');
-        if (savedMode) {
-            docModeSelector.value = savedMode;
-            setDocumentMode(savedMode);
+
+            initializeMode() {
+                this.setMode(this.currentMode);
+                this.docSelector.value = this.currentMode;
+            }
+
+            setMode(mode) {
+                document.body.classList.toggle('rec-mode', mode === 'rec');
+                this.modeButtons.forEach(button => {
+                    button.classList.toggle('active', button.dataset.mode === mode);
+                });
+                localStorage.setItem('documentMode', mode);
+                this.currentMode = mode;
+            }
+
+            setupEventListeners() {
+                this.modeButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        this.setMode(button.dataset.mode);
+                        this.docSelector.value = button.dataset.mode;
+                    });
+                });
+
+                this.docSelector.addEventListener('change', () => {
+                    this.setMode(this.docSelector.value);
+                });
+            }
         }
 
-        // Form validation and auto-calculation
-        const form = document.getElementById('form-inprocess');
-        const submitBtn = document.getElementById('submitBtn');
-
-        // Auto-calculate totals
-        const gradeB_inputs = [
-            'odGradeB', 'straightnessGradeB', 'weldSeamGradeB', 
-            'surfaceScratchGradeB', 'cutConditionGradeB', 'materialJointGradeB'
-        ];
-        const scrap_inputs = [
-            'odScrap', 'straightnessScrap', 'weldSeamScrap', 
-            'surfaceScratchScrap', 'cutConditionScrap', 'materialJointScrap'
-        ];
-        [...gradeB_inputs, ...scrap_inputs].forEach(inputName => {
-            const input = document.querySelector(`input[name="${inputName}"]`);
-            if (input) {
-                input.addEventListener('input', calculateTotals);
+        class CIRMode {
+            constructor() {
+                this.specificFields = document.querySelectorAll('.cir-only');
             }
-        });
-        function calculateTotals() {
-            let totalGradeB = 0;
-            let totalScrap = 0;
-            gradeB_inputs.forEach(inputName => {
-                const input = document.querySelector(`input[name="${inputName}"]`);
-                if (input && input.value) {
-                    const value = parseInt(input.value);
-                    if (!isNaN(value)) {
-                        totalGradeB += value;
-                    }
-                }
-            });
-            scrap_inputs.forEach(inputName => {
-                const input = document.querySelector(`input[name="${inputName}"]`);
-                if (input && input.value) {
-                    const value = parseInt(input.value);
-                    if (!isNaN(value)) {
-                        totalScrap += value;
-                    }
-                }
-            });
-            document.getElementById('totalPiecesGradeB').value = totalGradeB;
-            document.getElementById('totalPiecesScrap').value = totalScrap;
+
+            show() {
+                this.specificFields.forEach(field => field.style.display = 'block');
+            }
+
+            hide() {
+                this.specificFields.forEach(field => field.style.display = 'none');
+            }
         }
-        
-        // Form submission
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const requiredFields = form.querySelectorAll('[required]');
-            let isValid = true;
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.style.borderColor = 'var(--error)';
-                    field.classList.add('shake');
-                    setTimeout(() => {
-                        field.classList.remove('shake');
-                    }, 500);
+
+        class RECMode {
+            constructor() {
+                this.specificFields = document.querySelectorAll('.rec-only');
+            }
+
+            show() {
+                this.specificFields.forEach(field => field.style.display = 'block');
+            }
+
+            hide() {
+                this.specificFields.forEach(field => field.style.display = 'none');
+            }
+        }
+
+        class ProductDetailHandler {
+            constructor() {
+                this.select = document.getElementById('productDetail');
+                this.input = document.getElementById('productDetailTMTTIS107');
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                this.select.addEventListener('change', () => {
+                    this.handleSelection();
+                });
+            }
+
+            handleSelection() {
+                if (this.select.value === '1') {
+                    this.input.style.display = 'block';
+                    this.input.required = true;
                 } else {
-                    field.style.borderColor = 'var(--input-border)';
+                    this.input.style.display = 'none';
+                    this.input.required = false;
+                    this.input.value = '';
                 }
-            });
-            if (isValid) {
-                alert('บันทึกข้อมูลสำเร็จ!');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const documentMode = new DocumentMode();
+            const cirMode = new CIRMode();
+            const recMode = new RECMode();
+            const productDetailHandler = new ProductDetailHandler();
+
+            if (documentMode.currentMode === 'cir') {
+                cirMode.show();
+                recMode.hide();
             } else {
-                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+                cirMode.hide();
+                recMode.show();
             }
-        });
-        
-        // Add animation for submit button
-        submitBtn.addEventListener('mouseover', function() {
-            this.style.transform = 'translateY(-2px)';
-        });
-        submitBtn.addEventListener('mouseout', function() {
-            this.style.transform = 'translateY(0)';
-        });
-        
-        // Add keyframe animation for shake effect
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes shake {
-                0%, 100% { transform: translateX(0); }
-                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-                20%, 40%, 60%, 80% { transform: translateX(5px); }
+
+            const form = document.getElementById('form-inprocess');
+            const submitBtn = document.getElementById('submitBtn');
+
+            const gradeB_inputs = [
+                'odGradeB', 'straightnessGradeB', 'weldSeamGradeB',
+                'surfaceScratchGradeB', 'cutConditionGradeB', 'materialJointGradeB'
+            ];
+            const scrap_inputs = [
+                'odScrap', 'straightnessScrap', 'weldSeamScrap',
+                'surfaceScratchScrap', 'cutConditionScrap', 'materialJointScrap'
+            ];
+            [...gradeB_inputs, ...scrap_inputs].forEach(name => {
+                const inp = document.querySelector(`input[name="${name}"]`);
+                if (inp) inp.addEventListener('input', calculateTotals);
+            });
+
+            function calculateTotals() {
+                let totalB = 0, totalS = 0;
+                gradeB_inputs.forEach(n => {
+                    const v = parseInt(document.querySelector(`input[name="${n}"]`).value);
+                    if (!isNaN(v)) totalB += v;
+                });
+                scrap_inputs.forEach(n => {
+                    const v = parseInt(document.querySelector(`input[name="${n}"]`).value);
+                    if (!isNaN(v)) totalS += v;
+                });
+                document.getElementById('totalPiecesGradeB').value = totalB;
+                document.getElementById('totalPiecesScrap').value = totalS;
             }
-            .shake {
-                animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-            }
-        `;
-        document.head.appendChild(style);
-    });
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                let valid = true;
+                form.querySelectorAll('[required]').forEach(f => {
+                    if (!f.value.trim()) {
+                        valid = false;
+                        f.style.borderColor = 'var(--error)';
+                        f.classList.add('shake');
+                        setTimeout(() => f.classList.remove('shake'), 500);
+                    } else {
+                        f.style.borderColor = 'var(--input-border)';
+                    }
+                });
+                alert(valid ? 'บันทึกข้อมูลสำเร็จ!' : 'กรุณากรอกข้อมูลให้ครบถ้วน');
+            });
+
+            submitBtn.addEventListener('mouseover', () => submitBtn.style.transform = 'translateY(-2px)');
+            submitBtn.addEventListener('mouseout', () => submitBtn.style.transform = 'translateY(0)');
+
+            const style = document.createElement('style');
+            style.textContent = `
+                    @keyframes shake {
+                        0%,100% { transform: translateX(0); }
+                        10%,30%,50%,70%,90% { transform: translateX(-5px); }
+                        20%,40%,60%,80% { transform: translateX(5px); }
+                    }
+                    .shake {
+                        animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+                    }
+                `;
+            document.head.appendChild(style);
+        });
     </script>
+
 </body>
+
 </html>
