@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>INPROCESS INSPECTION (PIPE) - W-FM-QA-13 R09</title>
+    <style>
+      :root {
+        --primary-color: #007bff;
+        --secondary-color: #6c757d;
+        --accent-color: #a4e2ff4d;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 12px;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+      }
+
+      .header h1 {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        flex: 1;
+      }
+
+      .form-number {
+        text-align: right;
+        font-weight: bold;
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 5px;
+      }
+
+      .btn {
+        padding: 8px 16px;
+        border: 1px solid #ddd;
+        background: white;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.2s;
+      }
+
+      .btn:hover {
+        background: #e9ecef;
+      }
+
+      .btn-primary {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      .btn-primary:hover {
+        background: #0056b3;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        border: 2px solid #000;
+      }
+
+      th,
+      td {
+        border: 1px solid #000;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .table-header {
+        background-color: #f0f0f0;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .input-field {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        background: transparent;
+        padding: 4px;
+        font-size: 12px;
+      }
+
+      .input-field:focus {
+        background: var(--accent-color);
+        border: none;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .checkbox-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-right: 15px;
+      }
+
+      .checkbox {
+        width: 16px;
+        height: 16px;
+      }
+
+      .measurement-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      .measurement-table th,
+      .measurement-table td {
+        border: 1px solid #000;
+        padding: 4px;
+        text-align: center;
+      }
+
+      .measurement-table input {
+        width: 100%;
+        border: none;
+        text-align: center;
+        padding: 2px;
+        background: transparent;
+      }
+
+      .measurement-table input:focus {
+        background: #fff3cd;
+        outline: 1px solid #ffc107;
+      }
+
+      .add-row-btn {
+        margin-top: 5px;
+        padding: 4px 8px;
+        font-size: 11px;
+        background: #28a745;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .add-row-btn:hover {
+        background: #218838;
+      }
+
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 10px;
+      }
+
+      .grid-4 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 10px;
+      }
+
+      .grid-6 {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        gap: 10px;
+      }
+
+      .form-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 5px;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        white-space: nowrap;
+      }
+
+      .auto-calc {
+        background: #e3f2fd;
+        border: 1px solid #2196f3;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 20px 0;
+      }
+
+      .auto-calc h3 {
+        color: #1976d2;
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      .calc-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .calc-item {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+      }
+
+      .calc-value {
+        font-weight: bold;
+        color: #1976d2;
+      }
+
+      .section {
+        margin-bottom: 20px;
+        border: 2px solid #000;
+      }
+
+      .section-header {
+        background: #f0f0f0;
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+        border-bottom: 1px solid #000;
+      }
+
+      .section-content {
+        padding: 15px;
+      }
+
+      .characteristics-grid {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .footer {
+        text-align: center;
+        font-size: 11px;
+        color: #666;
+        border-top: 1px solid #ddd;
+        padding-top: 15px;
+        margin-top: 20px;
+      }
+
+      @media print {
+        .toolbar {
+          display: none;
+        }
+
+        body {
+          background: white;
+          padding: 0;
+        }
+
+        .container {
+          box-shadow: none;
+          border-radius: 0;
+        }
+      }
+
+      .error {
+        border: 1px solid #dc3545 !important;
+        background: #f8d7da !important;
+      }
+
+      .success {
+        border: 1px solid #28a745 !important;
+        background: #d4edda !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <div class="header">
+        <h1>INPROCESS INSPECTION (PIPE)</h1>
+        <div class="form-number">
+          <div>W-FM-QA-13 R09</div>
+          <div style="font-size: 10px; color: #666">
+            Effective Date: 01/04/2564
+          </div>
+        </div>
+      </div>
+
+      <!-- Toolbar -->
+      <div class="toolbar">
+        <button class="btn btn-primary" onclick="printForm()">🖨️ Print</button>
+        <button class="btn" onclick="exportToCSV()">📊 Export CSV</button>
+        <button class="btn" onclick="saveForm()">💾 Save</button>
+        <button class="btn" onclick="loadForm()">📁 Load</button>
+        <button class="btn" onclick="clearForm()">🗑️ Clear</button>
+        <button class="btn" onclick="validateForm()">✅ Validate</button>
+      </div>
+
+      <!-- Basic Information -->
+      <div class="section">
+        <div class="section-content">
+          <div class="grid-2">
+            <!-- Left section -->
+            <div>
+              <div class="grid-2" id="general-info"></div>
+
+              <div class="grid-2">
+                <div class="form-group">
+                  <label>ประเภทท่อ:</label>
+                  <label class="block-label">
+                    <input
+                      type="radio"
+                      name="pipeType"
+                      value="ไม่เคลือบผิว"
+                      onchange="saveToStorage()"
+                    />
+                    ไม่เคลือบผิว
+                  </label>
+                  <label class="block-label">
+                    <input
+                      type="radio"
+                      name="pipeType"
+                      value="เคลือบสังกะสี"
+                      onchange="saveToStorage()"
+                    />
+                    เคลือบสังกะสี (GI/GA)
+                  </label>
+                </div>
+
+                <div class="form-group">
+                  <label>หมายเลขจานวัดองศา:</label>
+                  <input
+                    type="text"
+                    class="input-field"
+                    id="degreePlateNumber"
+                    onchange="saveToStorage()"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Images -->
+            <div style="display: flex; justify-content: center">
+              <img
+                src="/public/circle-ref.png"
+                style="max-height: 200px"
+                alt="circle-ref"
+              />
+              <img
+                src="/public/square-ref.png"
+                style="max-height: 200px"
+                alt="square-ref"
+              />
+            </div>
+          </div>
+
+          <!-- Eddy Current Testing -->
+          <div class="form-group">
+            <input
+              type="checkbox"
+              id="eddyCurrentTest"
+              onchange="saveToStorage()"
+            />
+            <label for="eddyCurrentTest">
+              ทดสอบบริเวณแนวตะเข็บด้วยเครื่องอิเล็กโตรแมกเนติก (Eddy Current
+              Testing)
+            </label>
+          </div>
+
+          <!-- Marking details -->
+          <div class="form-group">
+            <label>รายละเอียดการพ่นเครื่องหมายและฉลากการค้า:</label>
+            <div class="checkbox-container">
+              <input
+                type="radio"
+                id="tmt3Point"
+                name="marking"
+                onchange="toggleTmtTis107Input(); saveToStorage()"
+              />
+              <label for="tmt3Point">TMT 3 จุด</label>
+            </div>
+
+            <div class="checkbox-container">
+              <input
+                type="radio"
+                id="tmtTis107"
+                name="marking"
+                onchange="toggleTmtTis107Input(); saveToStorage()"
+              />
+              <label for="tmtTis107">TMT TIS 107 -</label>
+              <input
+                type="text"
+                class="input-field"
+                id="tmtTis107Value"
+                style="width: 200px"
+                disabled
+                onchange="saveToStorage()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Characteristics -->
+      <div class="section">
+        <div class="section-header">ลักษณะและรายการตรวจสอบ</div>
+        <div class="section-content">
+          <div class="characteristics-grid">
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="line3"
+                onchange="saveToStorage()"
+              />
+              <label for="line3">3 เส้น</label>
+            </div>
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="line4"
+                onchange="saveToStorage()"
+              />
+              <label for="line4">4 เส้น</label>
+            </div>
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="line5"
+                onchange="saveToStorage()"
+              />
+              <label for="line5">5 เส้น</label>
+            </div>
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="lineOther"
+                onchange="saveToStorage()"
+              />
+              <input
+                type="text"
+                class="input-field"
+                id="lineOtherValue"
+                style="width: 50px"
+                onchange="saveToStorage()"
+              />
+              <label>เส้น</label>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>น้ำหนัก/มัด:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="weight"
+                  step="0.01"
+                  onchange="saveToStorage()"
+                />
+                <label>ก.ก.</label>
+              </div>
+              <div class="form-group">
+                <label>จำนวนทั้งหมดของเกรด A:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="gradeACount"
+                  onchange="saveToStorage()"
+                />
+                <label>เส้น</label>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px">
+            <div class="grid-2">
+              <div class="form-group">
+                <label>รวม (ชิ้น):</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="totalPieces"
+                  readonly
+                  style="background: #f8f9fa"
+                />
+              </div>
+              <div class="form-group">
+                <label>รวม (กิโลกรัม):</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="totalKg"
+                  step="0.01"
+                  onchange="saveToStorage()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- OD Measurements -->
+      <div class="section">
+        <div class="section-header">
+          เส้นผ่านศูนย์กลางภายนอก (OD) Measurements
+        </div>
+        <div class="section-content">
+          <div class="grid-2">
+            <div>
+              <div class="form-group">
+                <label>○ ท่อกลม ขนาด:</label>
+                <input
+                  type="text"
+                  class="input-field"
+                  id="odSpec"
+                  onchange="saveToStorage()"
+                />
+              </div>
+              <div class="form-group">
+                <label>+/-:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="odTolerance"
+                  step="0.01"
+                  onchange="saveToStorage()"
+                />
+                <label>mm.</label>
+              </div>
+              <div class="form-group">
+                <label>Range (</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="odRangeMin"
+                  step="0.01"
+                  style="width: 80px"
+                  onchange="saveToStorage()"
+                />
+                <label>-</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="odRangeMax"
+                  step="0.01"
+                  style="width: 80px"
+                  onchange="saveToStorage()"
+                />
+                <label>mm. )</label>
+              </div>
+            </div>
+            <div>
+              <table class="measurement-table">
+                <thead>
+                  <tr>
+                    <th>เวลา</th>
+                    <th>ด้าน A</th>
+                    <th>ด้าน B</th>
+                    <th>ด้าน C</th>
+                    <th>ด้าน D</th>
+                    <th>หมายเหตุ</th>
+                  </tr>
+                </thead>
+                <tbody id="odMeasurements">
+                  <!-- Rows will be added dynamically -->
+                </tbody>
+              </table>
+              <button class="add-row-btn" onclick="addODRow()">
+                + Add Row
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thickness Measurements -->
+      <div class="section">
+        <div class="section-header">ความหนา (Thickness) Measurements</div>
+        <div class="section-content">
+          <div class="grid-2">
+            <div>
+              <div class="form-group">
+                <label>ค่ากลาง:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="thicknessAvg"
+                  step="0.01"
+                  onchange="saveToStorage()"
+                />
+              </div>
+              <div class="form-group">
+                <label>+:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="thicknessPlus"
+                  step="0.01"
+                  onchange="saveToStorage()"
+                />
+                <label>mm.</label>
+              </div>
+              <div class="form-group">
+                <label>-:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="thicknessMinus"
+                  step="0.01"
+                  onchange="saveToStorage()"
+                />
+                <label>mm.</label>
+              </div>
+              <div class="form-group">
+                <label>Range (</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="thicknessRangeMin"
+                  step="0.01"
+                  style="width: 80px"
+                  onchange="saveToStorage()"
+                />
+                <label>-</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="thicknessRangeMax"
+                  step="0.01"
+                  style="width: 80px"
+                  onchange="saveToStorage()"
+                />
+                <label>mm. )</label>
+              </div>
+            </div>
+            <div>
+              <table class="measurement-table">
+                <thead>
+                  <tr>
+                    <th>เวลา</th>
+                    <th>ตำแหน่ง A</th>
+                    <th>ตำแหน่ง B</th>
+                    <th>ตำแหน่ง C</th>
+                    <th>ตำแหน่ง D</th>
+                    <th>หมายเหตุ</th>
+                  </tr>
+                </thead>
+                <tbody id="thicknessMeasurements">
+                  <!-- Rows will be added dynamically -->
+                </tbody>
+              </table>
+              <button class="add-row-btn" onclick="addThicknessRow()">
+                + Add Row
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Equipment Numbers -->
+      <div class="section">
+        <div class="section-header">หมายเลขเครื่องมือวัด</div>
+        <div class="section-content">
+          <div class="grid-4">
+            <div class="form-group">
+              <label>หมายเลขตลับเมตร:</label>
+              <input
+                type="text"
+                class="input-field"
+                id="tapeNumber"
+                onchange="saveToStorage()"
+              />
+            </div>
+            <div class="form-group">
+              <label>Vernier No.:</label>
+              <input
+                type="text"
+                class="input-field"
+                id="vernierNumber"
+                onchange="saveToStorage()"
+              />
+            </div>
+            <div class="form-group">
+              <label>Micrometer No.:</label>
+              <input
+                type="text"
+                class="input-field"
+                id="micrometerNumber"
+                onchange="saveToStorage()"
+              />
+            </div>
+            <div class="form-group">
+              <label>Reflextrometer No.:</label>
+              <input
+                type="text"
+                class="input-field"
+                id="reflextrometer"
+                onchange="saveToStorage()"
+              />
+            </div>
+            <div class="form-group">
+              <label>หมายเลขไม้บรรทัด:</label>
+              <input
+                type="text"
+                class="input-field"
+                id="rulerNumber"
+                onchange="saveToStorage()"
+              />
+            </div>
+            <div class="form-group">
+              <label>หมายเลขเครื่องชั่ง:</label>
+              <input
+                type="text"
+                class="input-field"
+                id="scaleNumber"
+                onchange="saveToStorage()"
+              />
+            </div>
+            <div class="form-group">
+              <label>หมายเลขจานวัดองศา:</label>
+              <input
+                type="text"
+                class="input-field"
+                id="protractorNumber"
+                onchange="saveToStorage()"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pipe Type and Testing -->
+      <div class="section">
+        <div class="section-header">ประเภทท่อและการทดสอบ</div>
+        <div class="section-content">
+          <div class="characteristics-grid">
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="uncoated"
+                onchange="saveToStorage()"
+              />
+              <label for="uncoated">ไม่เคลือบผิว</label>
+            </div>
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="galvanized"
+                onchange="saveToStorage()"
+              />
+              <label for="galvanized">เคลือบสังกะสี (GI/GA)</label>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px">
+            <div class="checkbox-container">
+              <input
+                type="checkbox"
+                class="checkbox"
+                id="eddyCurrentTest"
+                onchange="saveToStorage()"
+              />
+              <label for="eddyCurrentTest"
+                >ทดสอบบริเวณแนวตะเข็บด้วยเครื่องอิเล็กโตรแมกเนติก (Eddy Current
+                Testing)</label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Arrangement and Quality -->
+      <div class="section">
+        <div class="section-header">การจัดเรียงสินค้าและคุณภาพ</div>
+        <div class="section-content">
+          <div class="grid-3">
+            <div class="form-group">
+              <label>ขนาดสายรัด:</label>
+              <input
+                type="number"
+                class="input-field"
+                id="strapSize"
+                onchange="saveToStorage()"
+              />
+              <label>mm.</label>
+            </div>
+            <div class="form-group">
+              <label>จำนวนแพ็คสายรัด:</label>
+              <input
+                type="number"
+                class="input-field"
+                id="strapCount"
+                onchange="saveToStorage()"
+              />
+            </div>
+          </div>
+
+          <div style="margin-top: 15px">
+            <div class="grid-3">
+              <div class="form-group">
+                <label>หัว:</label>
+                <input
+                  type="text"
+                  class="input-field"
+                  id="strapHead"
+                  onchange="saveToStorage()"
+                />
+              </div>
+              <div class="form-group">
+                <label>กลาง:</label>
+                <input
+                  type="text"
+                  class="input-field"
+                  id="strapMiddle"
+                  onchange="saveToStorage()"
+                />
+              </div>
+              <div class="form-group">
+                <label>ท้าย:</label>
+                <input
+                  type="text"
+                  class="input-field"
+                  id="strapTail"
+                  onchange="saveToStorage()"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 15px">
+            <div class="form-group">
+              <label>สาเหตุสินค้าไม่ได้คุณภาพ (NG):</label>
+              <input
+                type="text"
+                class="input-field"
+                id="ngReason"
+                onchange="saveToStorage()"
+              />
+            </div>
+          </div>
+
+          <div style="margin-top: 15px">
+            <div class="grid-4">
+              <div class="form-group">
+                <label>เกรด A:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="gradeA"
+                  onchange="calculateTotals(); saveToStorage()"
+                />
+              </div>
+              <div class="form-group">
+                <label>เกรด B:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="gradeB"
+                  onchange="calculateTotals(); saveToStorage()"
+                />
+              </div>
+              <div class="form-group">
+                <label>Scrap:</label>
+                <input
+                  type="number"
+                  class="input-field"
+                  id="scrap"
+                  onchange="calculateTotals(); saveToStorage()"
+                />
+              </div>
+              <div class="form-group">
+                <label>ผู้บันทึก:</label>
+                <input
+                  type="text"
+                  class="input-field"
+                  id="inspector"
+                  onchange="saveToStorage()"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auto Calculations -->
+      <div class="auto-calc">
+        <h3>🧮 Auto Calculations</h3>
+        <div class="calc-grid">
+          <div class="calc-item">
+            <span>Total Pieces:</span>
+            <span class="calc-value" id="calcTotalPieces">0</span>
+          </div>
+          <div class="calc-item">
+            <span>Grade A Count:</span>
+            <span class="calc-value" id="calcGradeA">0</span>
+          </div>
+          <div class="calc-item">
+            <span>Total Weight:</span>
+            <span class="calc-value" id="calcTotalWeight">0 kg</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reference Shapes -->
+      <div class="section">
+        <div class="section-header">รูปอ้างอิงการตรวจเช็ค</div>
+        <div class="section-content">
+          <div class="grid-3">
+            <div style="text-align: center">
+              <div style="font-weight: bold; margin-bottom: 10px">
+                รูปหกเหลี่ยม
+              </div>
+              <div>A B C D E F</div>
+            </div>
+            <div style="text-align: center">
+              <div style="font-weight: bold; margin-bottom: 10px">
+                รูปสี่เหลี่ยมจัตุรัส
+              </div>
+              <div>A B C D</div>
+            </div>
+            <div style="text-align: center">
+              <div style="font-weight: bold; margin-bottom: 10px">
+                รูปสี่เหลี่ยมผืนผ้า
+              </div>
+              <div>A B C D E</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        W-FM-QA-13 R09 | Effective Date: 01/04/2564 | Page 1 of 2
+      </div>
+    </div>
+
+    <script>
+      // Initialize the form
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeMeasurementTables();
+        loadFromStorage();
+        calculateTotals();
+      });
+
+      const generalFields = [
+        { label: "เครื่องจักร:", id: "machine", type: "text" },
+        { label: "Vernier No.:", id: "vernierNumber", type: "text" },
+        { label: "วันที่ผลิต:", id: "productionDate", type: "date" },
+        { label: "Micrometer No.:", id: "micrometerNumber", type: "text" },
+        { label: "เลขที่ใบสั่งผลิต:", id: "orderNumber", type: "text" },
+        {
+          label: "Reflextrometer No.:",
+          id: "reflextrometerNumber",
+          type: "text",
+        },
+        { label: "เกรดวัตถุดิบ:", id: "materialGrade", type: "text" },
+        { label: "หมายเลขตลับเมตร:", id: "tapeNumber", type: "text" },
+        { label: "ความกว้างฟิล์ม:", id: "filmWidth", type: "text" },
+        { label: "หมายเลขไม้บรรทัด:", id: "rulerNumber", type: "text" },
+        { label: "ขนาดผลิต:", id: "productSize", type: "text" },
+        { label: "หมายเลขเครื่องชั่ง:", id: "scaleNumber", type: "text" },
+      ];
+
+      const container = document.getElementById("general-info");
+
+      generalFields.forEach((field) => {
+        const formGroup = document.createElement("div");
+        formGroup.className = "form-group";
+
+        const label = document.createElement("label");
+        label.textContent = field.label;
+
+        const input = document.createElement("input");
+        input.type = field.type;
+        input.className = "input-field";
+        input.id = field.id;
+        input.onchange = () => saveToStorage();
+
+        formGroup.appendChild(label);
+        formGroup.appendChild(input);
+
+        container.appendChild(formGroup);
+      });
+
+      // Initialize measurement tables with default rows
+      function initializeMeasurementTables() {
+        // Add 3 default rows for OD measurements
+        for (let i = 0; i < 3; i++) {
+          addODRow();
+        }
+
+        // Add 3 default rows for thickness measurements
+        for (let i = 0; i < 3; i++) {
+          addThicknessRow();
+        }
+      }
+
+      // Add OD measurement row
+      function addODRow() {
+        const tbody = document.getElementById("odMeasurements");
+        const rowCount = tbody.children.length;
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+                <td><input type="time" class="input-field" id="odTime${rowCount}" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="odSideA${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="odSideB${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="odSideC${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="odSideD${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="text" class="input-field" id="odNotes${rowCount}" onchange="saveToStorage()"></td>
+            `;
+
+        tbody.appendChild(row);
+      }
+
+      // Add thickness measurement row
+      function addThicknessRow() {
+        const tbody = document.getElementById("thicknessMeasurements");
+        const rowCount = tbody.children.length;
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+                <td><input type="time" class="input-field" id="thicknessTime${rowCount}" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="thicknessPosA${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="thicknessPosB${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="thicknessPosC${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="number" class="input-field" id="thicknessPosD${rowCount}" step="0.01" onchange="saveToStorage()"></td>
+                <td><input type="text" class="input-field" id="thicknessNotes${rowCount}" onchange="saveToStorage()"></td>
+            `;
+
+        tbody.appendChild(row);
+      }
+
+              function toggleTmtTis107Input() {
+          const tmtTis107Radio = document.getElementById("tmtTis107");
+          const inputField = document.getElementById("tmtTis107Value");
+          inputField.disabled = !tmtTis107Radio.checked;
+        }
+      // Calculate totals automatically
+      function calculateTotals() {
+        const gradeA = parseFloat(document.getElementById("gradeA").value) || 0;
+        const gradeB = parseFloat(document.getElementById("gradeB").value) || 0;
+        const scrap = parseFloat(document.getElementById("scrap").value) || 0;
+        const weight = parseFloat(document.getElementById("weight").value) || 0;
+
+        const totalPieces = gradeA + gradeB + scrap;
+
+        // Update calculated fields
+        document.getElementById("totalPieces").value = totalPieces;
+        document.getElementById("calcTotalPieces").textContent = totalPieces;
+        document.getElementById("calcGradeA").textContent = gradeA;
+        document.getElementById("calcTotalWeight").textContent = weight + " kg";
+      }
+
+      // Save form data to localStorage
+      function saveToStorage() {
+        const formData = {};
+        const inputs = document.querySelectorAll("input");
+
+        inputs.forEach((input) => {
+          if (input.type === "checkbox") {
+            formData[input.id] = input.checked;
+          } else {
+            formData[input.id] = input.value;
+          }
+        });
+
+        localStorage.setItem("inspectionForm", JSON.stringify(formData));
+      }
+
+      // Load form data from localStorage
+      function loadFromStorage() {
+        const savedData = localStorage.getItem("inspectionForm");
+        if (savedData) {
+          const formData = JSON.parse(savedData);
+
+          Object.keys(formData).forEach((key) => {
+            const element = document.getElementById(key);
+            if (element) {
+              if (element.type === "checkbox") {
+                element.checked = formData[key];
+              } else {
+                element.value = formData[key];
+              }
+            }
+          });
+
+          calculateTotals();
+        }
+      }
+
+      // Print form
+      function printForm() {
+        window.print();
+      }
+
+      // Export to CSV
+      function exportToCSV() {
+        const data = [];
+
+        // Header
+        data.push(["INPROCESS INSPECTION (PIPE) - W-FM-QA-13 R09"]);
+        data.push([]);
+
+        // Basic information
+        data.push(["เครื่องจักร", document.getElementById("machine").value]);
+        data.push([
+          "วันที่ผลิต",
+          document.getElementById("productionDate").value,
+        ]);
+        data.push([
+          "เลขที่ใบสั่งผลิต",
+          document.getElementById("orderNumber").value,
+        ]);
+        data.push([
+          "เกรดวัตถุดิบ",
+          document.getElementById("materialGrade").value,
+        ]);
+        data.push([]);
+
+        // Grades
+        data.push(["เกรด A", document.getElementById("gradeA").value]);
+        data.push(["เกรด B", document.getElementById("gradeB").value]);
+        data.push(["Scrap", document.getElementById("scrap").value]);
+        data.push(["รวม", document.getElementById("totalPieces").value]);
+
+        // Convert to CSV
+        const csvContent = data.map((row) => row.join(",")).join("\n");
+
+        // Download
+        const blob = new Blob([csvContent], {
+          type: "text/csv;charset=utf-8;",
+        });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+        link.setAttribute("href", url);
+        link.setAttribute("download", "inspection-form.csv");
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // Save form to file
+      function saveForm() {
+        const formData = {};
+        const inputs = document.querySelectorAll("input");
+
+        inputs.forEach((input) => {
+          if (input.type === "checkbox") {
+            formData[input.id] = input.checked;
+          } else {
+            formData[input.id] = input.value;
+          }
+        });
+
+        const dataStr = JSON.stringify(formData, null, 2);
+        const blob = new Blob([dataStr], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "inspection-form.json";
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      // Load form from file
+      function loadForm() {
+        const input = document.createElement("input");
+        input.type = "file";
+        input.accept = ".json";
+
+        input.onchange = function (event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              try {
+                const formData = JSON.parse(e.target.result);
+
+                Object.keys(formData).forEach((key) => {
+                  const element = document.getElementById(key);
+                  if (element) {
+                    if (element.type === "checkbox") {
+                      element.checked = formData[key];
+                    } else {
+                      element.value = formData[key];
+                    }
+                  }
+                });
+
+                calculateTotals();
+                saveToStorage();
+                alert("Form loaded successfully!");
+              } catch (error) {
+                alert("Error loading form: " + error.message);
+              }
+            };
+            reader.readAsText(file);
+          }
+        };
+
+        input.click();
+      }
+
+      // Clear form
+      function clearForm() {
+        if (confirm("Are you sure you want to clear all data?")) {
+          const inputs = document.querySelectorAll("input");
+          inputs.forEach((input) => {
+            if (input.type === "checkbox") {
+              input.checked = false;
+            } else {
+              input.value = "";
+            }
+          });
+
+          calculateTotals();
+          localStorage.removeItem("inspectionForm");
+          alert("Form cleared!");
+        }
+      }
+
+      // Validate form
+      function validateForm() {
+        const requiredFields = ["machine", "productionDate", "orderNumber"];
+        let isValid = true;
+        let errors = [];
+
+        // Remove previous error styling
+        document
+          .querySelectorAll(".error")
+          .forEach((el) => el.classList.remove("error"));
+
+        requiredFields.forEach((fieldId) => {
+          const field = document.getElementById(fieldId);
+          if (!field.value.trim()) {
+            field.classList.add("error");
+            errors.push(`${fieldId} is required`);
+            isValid = false;
+          }
+        });
+
+        // Check if at least one characteristic is selected
+        const characteristics = ["line3", "line4", "line5", "lineOther"];
+        const hasCharacteristic = characteristics.some(
+          (id) => document.getElementById(id).checked
+        );
+
+        if (!hasCharacteristic) {
+          errors.push("Please select at least one line characteristic");
+          isValid = false;
+        }
+
+        if (isValid) {
+          alert("Form validation passed! ✅");
+          document.querySelectorAll(".input-field").forEach((el) => {
+            if (el.value.trim()) {
+              el.classList.add("success");
+              setTimeout(() => el.classList.remove("success"), 2000);
+            }
+          });
+        } else {
+          alert("Validation errors:\n" + errors.join("\n"));
+        }
+
+        return isValid;
+      }
+
+      // Add keyboard navigation
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Tab") {
+          // Tab navigation is handled by browser
+          return;
+        }
+
+        if (e.key === "Enter" && e.target.classList.contains("input-field")) {
+          e.preventDefault();
+          const inputs = Array.from(document.querySelectorAll(".input-field"));
+          const currentIndex = inputs.indexOf(e.target);
+          const nextInput = inputs[currentIndex + 1];
+
+          if (nextInput) {
+            nextInput.focus();
+          }
+        }
+      });
+
+      // Auto-save every 30 seconds
+      setInterval(saveToStorage, 30000);
+    </script>
+  </body>
+</html>
